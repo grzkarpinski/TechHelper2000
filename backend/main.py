@@ -8,6 +8,7 @@ from backend.config import get_allowed_origins, validate_environment
 from backend.database import AsyncSessionLocal, init_db
 from backend.models import User
 from backend.routers.auth import router as auth_router
+from backend.routers.calculators import router as calculators_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Machining Helper API")
 app.include_router(auth_router)
+app.include_router(calculators_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_allowed_origins(),

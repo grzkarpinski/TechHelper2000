@@ -2,6 +2,14 @@
 
 Aplikacja webowa dla technologa obrobki skrawaniem z backendem FastAPI i frontendem React.
 
+## Szybki start (Windows)
+
+Uruchom z katalogu glownego projektu jednym poleceniem (tworzy `.venv`, doinstalowuje zaleznosci tylko gdy sie zmienia i odpala backend + frontend w osobnych oknach):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start-dev.ps1
+```
+
 ## Wymagania systemowe
 
 - Python 3.13+

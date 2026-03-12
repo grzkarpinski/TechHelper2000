@@ -1,5 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import CostCalculator from "@/components/calculators/CostCalculator";
+import DrillingCalculator from "@/components/calculators/DrillingCalculator";
+import MillingCalculator from "@/components/calculators/MillingCalculator";
 import { AdminRoute, PrivateRoute } from "@/components/layout/RouteGuards";
 import LoginPage from "@/pages/LoginPage";
 import PlaceholderPage from "@/pages/PlaceholderPage";
@@ -9,9 +12,9 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<PrivateRoute />}>
-        <Route path="/calculators/milling" element={<PlaceholderPage title="Kalkulator frezowania" description="Tutaj pojawi sie kalkulator parametrow frezowania w fazie 2." />} />
-        <Route path="/calculators/drilling" element={<PlaceholderPage title="Kalkulator wiercenia" description="Tutaj pojawi sie kalkulator parametrow wiercenia w fazie 2." />} />
-        <Route path="/calculators/cost" element={<PlaceholderPage title="Kalkulator kosztu" description="Tutaj pojawi sie kalkulator kosztu obrobki w fazie 2." />} />
+        <Route path="/calculators/milling" element={<MillingCalculator />} />
+        <Route path="/calculators/drilling" element={<DrillingCalculator />} />
+        <Route path="/calculators/cost" element={<CostCalculator />} />
         <Route path="/tools/milling-heads" element={<PlaceholderPage title="Glowice frezarskie" description="Modul katalogu narzedzi zostanie uzupelniony w fazie 3." />} />
         <Route path="/tools/milling-cutters" element={<PlaceholderPage title="Frezy" description="Modul katalogu narzedzi zostanie uzupelniony w fazie 3." />} />
         <Route path="/tools/drills" element={<PlaceholderPage title="Wiertla" description="Modul katalogu narzedzi zostanie uzupelniony w fazie 3." />} />

@@ -711,10 +711,10 @@ W ramach każdej fazy agent zawsze zaczyna od backendu (modele → schematy → 
 
 ### Status implementacji
 
-- Aktualny stan na `2026-03-10`: **Faza 1 zakonczona**
-- Zrealizowane: struktura projektu, backend FastAPI, auth JWT, model `users`, skrypt `create_admin.py`, frontend Vite/React, `AuthContext`, `PrivateRoute`, `AdminRoute`, sidebar, placeholdery podstron, `README.md`, `.env`, `Procfile`
-- Zweryfikowane: backend startuje, endpoint `/health` odpowiada, frontend przechodzi `vite build`
-- Kolejny krok na nastepna sesje: **Faza 2 — Kalkulatory**
+- Aktualny stan na `2026-03-12`: **Faza 2 zakonczona**
+- Zrealizowane: kalkulatory backend (`milling_feed_speed.py`, `drilling_feed_speed.py`, `routers/calculators.py`), schematy kalkulatorow w `schemas.py`, testy `test_milling_calculator.py` i `test_drilling_calculator.py`, frontendowe komponenty `MillingCalculator`, `DrillingCalculator`, `CostCalculator`, klient API `src/api/calculators.js`, podpiecie tras kalkulatorow w `App.jsx`, rozbicie wyniku kosztu na osobne podsumowania `Tpz` i `Tj`
+- Zweryfikowane: `pytest backend/tests/test_milling_calculator.py backend/tests/test_drilling_calculator.py -v` (8/8 PASS), `npm run build` (PASS), frontend build po zmianie widoku kosztu (PASS)
+- Kolejny krok na nastepna sesje: **Faza 3 — Baza narzedzi**
 - Przed dalsza praca upewnij sie, ze istnieje pierwsze konto admina utworzone przez `backend/create_admin.py`
 
 ---
