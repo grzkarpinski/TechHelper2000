@@ -110,10 +110,11 @@ export default function DrillingCalculator() {
         <CardContent>
           {result ? (
             <div>
-              <ResultRow label="Vc" value={result.vc} unit="m/min" />
-              <ResultRow label="n" value={result.n} unit="obr/min" />
-              <ResultRow label="fn" value={result.fn} unit="mm/obr" />
-              <ResultRow label="F" value={result.f} unit="mm/min" />
+              <ResultRow label="Vc" value={Math.round(result.vc)} unit="m/min" />
+              <ResultRow label="fn" value={Number(result.fn).toFixed(2)} unit="mm/obr" />
+              <div className="my-2" />
+              <ResultRow label="n" value={Math.round(result.n)} unit="obr/min" />
+              <ResultRow label="F" value={Math.round(result.f)} unit="mm/min" />
             </div>
           ) : (
             <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>

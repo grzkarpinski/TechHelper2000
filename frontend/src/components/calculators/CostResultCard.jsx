@@ -27,11 +27,11 @@ export default function CostResultCard({ response }) {
               <div key={`${operation.group_id}-${index}`} className="space-y-1 rounded-md border border-border p-3 text-sm">
                 <div className="text-slate-400">Grupa {operation.group_id}</div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Tpz</span>
+                  <span className="text-slate-400">Tpz: {Number(operation.tpz).toFixed(1)} min</span>
                   <span className="text-green-400">{operation.cost_tpz.toFixed(2)} PLN</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Tj</span>
+                  <span className="text-slate-400">Tj: {Number(operation.tj).toFixed(1)} min</span>
                   <span className="text-green-400">{operation.cost_tj.toFixed(2)} PLN</span>
                 </div>
                 <div className="flex justify-between border-t border-border pt-1 font-medium">
@@ -40,23 +40,13 @@ export default function CostResultCard({ response }) {
                 </div>
               </div>
             ))}
-            <div className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-slate-400">Suma Tpz</span>
-                <span>{totalTpz.toFixed(2)} min</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">Suma Tj</span>
-                <span>{totalTj.toFixed(2)} min</span>
-              </div>
-            </div>
             <div className="mt-3 space-y-1 border-t border-border pt-3 text-base font-semibold">
               <div className="flex justify-between">
-                <span>Suma (Tpz)</span>
+                <span>Suma Tpz: {totalTpz.toFixed(1)} min</span>
                 <span className="text-green-400">{totalCostTpz.toFixed(2)} PLN</span>
               </div>
               <div className="flex justify-between">
-                <span>Suma (Tj)</span>
+                <span>Suma Tj: {totalTj.toFixed(1)} min</span>
                 <span className="text-green-400">{totalCostTj.toFixed(2)} PLN</span>
               </div>
               <div className="flex justify-between border-t border-border pt-2">

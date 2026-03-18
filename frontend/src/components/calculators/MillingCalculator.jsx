@@ -123,11 +123,12 @@ export default function MillingCalculator() {
         <CardContent>
           {result ? (
             <div>
-              <ResultRow label="Vc" value={result.vc} unit="m/min" />
-              <ResultRow label="n" value={result.n} unit="obr/min" />
-              <ResultRow label="Fz" value={result.fz} unit="mm/zab" />
-              <ResultRow label="F" value={result.f} unit="mm/min" />
-              {result.q != null ? <ResultRow label="Q" value={result.q} unit="cm3/min" /> : null}
+              <ResultRow label="Vc" value={Math.round(result.vc)} unit="m/min" />
+              <ResultRow label="Fz" value={Number(result.fz).toFixed(2)} unit="mm/zab" />
+              <div className="my-2" />
+              <ResultRow label="n" value={Math.round(result.n)} unit="obr/min" />
+              <ResultRow label="F" value={Math.round(result.f)} unit="mm/min" />
+              {result.q != null ? <ResultRow label="Q" value={Number(result.q).toFixed(2)} unit="cm³/min" /> : null}
             </div>
           ) : (
             <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
