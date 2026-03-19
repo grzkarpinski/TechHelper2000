@@ -711,11 +711,14 @@ W ramach każdej fazy agent zawsze zaczyna od backendu (modele → schematy → 
 
 ### Status implementacji
 
-- Aktualny stan na `2026-03-12`: **Faza 2 zakonczona**
-- Zrealizowane: kalkulatory backend (`milling_feed_speed.py`, `drilling_feed_speed.py`, `routers/calculators.py`), schematy kalkulatorow w `schemas.py`, testy `test_milling_calculator.py` i `test_drilling_calculator.py`, frontendowe komponenty `MillingCalculator`, `DrillingCalculator`, `CostCalculator`, klient API `src/api/calculators.js`, podpiecie tras kalkulatorow w `App.jsx`, rozbicie wyniku kosztu na osobne podsumowania `Tpz` i `Tj`
-- Zweryfikowane: `pytest backend/tests/test_milling_calculator.py backend/tests/test_drilling_calculator.py -v` (8/8 PASS), `npm run build` (PASS), frontend build po zmianie widoku kosztu (PASS)
-- Kolejny krok na nastepna sesje: **Faza 3 — Baza narzedzi**
-- Przed dalsza praca upewnij sie, ze istnieje pierwsze konto admina utworzone przez `backend/create_admin.py`
+- Aktualny stan na `2026-03-19`: **Faza 3 zakonczona**
+- Zrealizowane w Fazie 3: pelny CRUD backend + frontend dla 3 typow narzedzi (glowice frezarskie, frezy, wiertla)
+  - Backend: 3 modele SQLAlchemy w `models.py` (`MillingHead`, `MillingCutter`, `Drill`), schematy w `schemas_tools.py`, 3 routery CRUD (`routers/milling_heads.py`, `routers/milling_cutters.py`, `routers/drills.py`), rejestracja w `main.py`
+  - Frontend: 3 pliki API (`millingHeads.js`, `millingCutters.js`, `drills.js`), konfiguracja pol i kolumn w `constants/toolFields.js`, hook `useToolsData.js` (sortowanie + filtrowanie klient-side), wspoldzielony formularz `ToolForm.jsx` (dialog add/edit), `DeleteConfirmDialog.jsx`, `ToolsTableHeader.jsx` (sortowanie), `ToolsFilterBar.jsx`, 3 tabele (`MillingHeadsTable.jsx`, `MillingCuttersTable.jsx`, `DrillsTable.jsx`)
+  - Dodano shadcn/ui: `table`, `dialog`, `select`, `badge`, `separator` + `components.json`. Button: dodano variant `destructive` + size `icon`. Tailwind: dodano CSS vars `popover`, `accent`, `destructive`
+  - Trasy w `App.jsx` zamienione z placeholderow na rzeczywiste komponenty
+- Zweryfikowane: `pytest backend/tests/ -v` (8/8 PASS), `vite build` (PASS), importy backend OK, tabele DB (`users`, `milling_heads`, `milling_cutters`, `drills`) utworzone, wszystkie pliki w limitach dlugosci
+- Kolejny krok na nastepna sesje: **Faza 4 — Panel admina**
 
 ---
 

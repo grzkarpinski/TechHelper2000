@@ -18,6 +18,12 @@
     --muted-foreground: 215 20% 65%;
     --ring: 217 91% 60%;
     --radius: 0.75rem;
+    --popover: 222 39% 11%;
+    --popover-foreground: 210 40% 98%;
+    --accent: 217 33% 18%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
   }
 
   * {
