@@ -99,7 +99,10 @@ machining-helper/
 5. **Zawsze używaj async** — sesje bazy danych przez `AsyncSession`, endpointy jako `async def`.
 6. **Inicjalizacja bazy danych** — na etapie MVP inicjalizacja odbywa się przez `Base.metadata.create_all()`. Kod modeli musi być jednak czysty i modularny, aby w przyszłości umożliwić łatwe wdrożenie narzędzia Alembic.
 6. **CORS** — dozwolone originy czytane ze zmiennej środowiskowej `ALLOWED_ORIGINS`. W dev: `http://localhost:5173`.
-7. **Ochrona endpointów przez dependency injection** — wszystkie endpointy poza `/api/auth/login` wymagają `Depends(get_current_user)` z `dependencies.py`. Endpointy admina dodatkowo wymagają `Depends(require_admin)`.
+7. **Ochrona endpointów przez dependency injection** — trzy poziomy dostępu:
+   - **Publiczne** (bez autoryzacji): `/api/auth/login`, `/api/calculators/milling`, `/api/calculators/drilling`
+   - **Zalogowany** (`Depends(get_current_user)`): `/api/auth/me`
+   - **Tylko admin** (`Depends(require_admin)`): `/api/calculators/cost`, `/api/tools/*`, `/api/admin/*`
 8. **Prefixy routerów:**
    - `/api/auth`
    - `/api/admin`
@@ -711,7 +714,12 @@ W ramach każdej fazy agent zawsze zaczyna od backendu (modele → schematy → 
 
 ### Status implementacji
 
-- Aktualny stan na `2026-03-19`: **Faza 3 zakonczona**
+- Aktualny stan na `2026-03-19`: **Faza 3 zakonczona** + zmiana modelu dostepu
+- Zmiana modelu dostepu (2026-03-19):
+  - Kalkulatory frezowania i wiercenia: publiczne (bez logowania)
+  - Kalkulator kosztow, katalogi narzedzi, panel admina: tylko rola `admin`
+  - Backend: usunięto auth z endpointow milling/drilling, zmieniono get_current_user → require_admin w cost + 3 routerach narzedzi
+  - Frontend: PrivateRoute → PublicRoute (layout bez auth) + AdminRoute (sprawdza role), Sidebar warunkowe sekcje + przycisk Zaloguj/Wyloguj, logout() redirect na /calculators/milling
 - Zrealizowane w Fazie 3: pelny CRUD backend + frontend dla 3 typow narzedzi (glowice frezarskie, frezy, wiertla)
   - Backend: 3 modele SQLAlchemy w `models.py` (`MillingHead`, `MillingCutter`, `Drill`), schematy w `schemas_tools.py`, 3 routery CRUD (`routers/milling_heads.py`, `routers/milling_cutters.py`, `routers/drills.py`), rejestracja w `main.py`
   - Frontend: 3 pliki API (`millingHeads.js`, `millingCutters.js`, `drills.js`), konfiguracja pol i kolumn w `constants/toolFields.js`, hook `useToolsData.js` (sortowanie + filtrowanie klient-side), wspoldzielony formularz `ToolForm.jsx` (dialog add/edit), `DeleteConfirmDialog.jsx`, `ToolsTableHeader.jsx` (sortowanie), `ToolsFilterBar.jsx`, 3 tabele (`MillingHeadsTable.jsx`, `MillingCuttersTable.jsx`, `DrillsTable.jsx`)

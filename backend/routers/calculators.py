@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from backend.calculations.drilling_feed_speed import calculate_drilling
 from backend.calculations.milling_feed_speed import calculate_milling
-from backend.dependencies import get_current_user
+from backend.dependencies import require_admin
 from backend.models import User
 from backend.schemas import (
     CostCalculationResponse,
@@ -34,7 +34,6 @@ MACHINE_RATES = {
 @router.post("/milling", response_model=MillingCalculationResponse)
 async def calculate_milling_endpoint(
     payload: MillingCalculationRequest,
-    _: User = Depends(get_current_user),
 ) -> MillingCalculationResponse:
     try:
         result = calculate_milling(payload.model_dump())
@@ -47,7 +46,6 @@ async def calculate_milling_endpoint(
 @router.post("/drilling", response_model=DrillingCalculationResponse)
 async def calculate_drilling_endpoint(
     payload: DrillingCalculationRequest,
-    _: User = Depends(get_current_user),
 ) -> DrillingCalculationResponse:
     try:
         result = calculate_drilling(payload.model_dump())
@@ -61,7 +59,7 @@ async def calculate_drilling_endpoint(
 async def calculate_cost_endpoint(
     operations: list[CostOperationRequest],
     rate_type: str = Query(default="old", pattern="^(old|new_2026|external_2026)$"),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> CostCalculationResponse:
     if len(operations) == 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Lista operacji nie moze byc pusta")

@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
   function logout() {
     localStorage.removeItem("auth_token");
     setUser(null);
-    navigate("/login", { replace: true });
+    navigate("/calculators/milling", { replace: true });
   }
 
   return (

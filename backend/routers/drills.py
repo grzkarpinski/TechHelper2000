@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db_session
-from backend.dependencies import get_current_user
+from backend.dependencies import require_admin
 from backend.models import Drill, User
 from backend.schemas_tools import DrillCreate, DrillResponse
 
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/tools/drills", tags=["drills"])
 @router.get("/", response_model=list[DrillResponse])
 async def list_drills(
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> list[DrillResponse]:
     result = await session.execute(select(Drill))
     return [DrillResponse.model_validate(row) for row in result.scalars().all()]
@@ -23,7 +23,7 @@ async def list_drills(
 async def create_drill(
     payload: DrillCreate,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> DrillResponse:
     drill = Drill(**payload.model_dump())
     session.add(drill)
@@ -36,7 +36,7 @@ async def create_drill(
 async def get_drill(
     drill_id: int,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> DrillResponse:
     result = await session.execute(select(Drill).where(Drill.id == drill_id))
     drill = result.scalar_one_or_none()
@@ -50,7 +50,7 @@ async def update_drill(
     drill_id: int,
     payload: DrillCreate,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> DrillResponse:
     result = await session.execute(select(Drill).where(Drill.id == drill_id))
     drill = result.scalar_one_or_none()
@@ -67,7 +67,7 @@ async def update_drill(
 async def delete_drill(
     drill_id: int,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> None:
     result = await session.execute(select(Drill).where(Drill.id == drill_id))
     drill = result.scalar_one_or_none()

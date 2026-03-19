@@ -1,13 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
-import { Calculator, Drill, Gauge, Shield, TableProperties } from "lucide-react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Calculator, Drill, Gauge, LogIn, Shield, TableProperties } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
-const primaryLinks = [
+const publicCalcLinks = [
   { to: "/calculators/milling", label: "Frezowanie", icon: Calculator },
   { to: "/calculators/drilling", label: "Wiercenie", icon: Drill },
+];
+
+const adminCalcLinks = [
   { to: "/calculators/cost", label: "Koszt obrobki", icon: Gauge },
 ];
 
@@ -38,6 +41,8 @@ function SidebarLink({ to, label, icon: Icon }) {
 
 export default function Sidebar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const isAdmin = user?.role === "admin";
 
   return (
     <aside className="flex h-screen w-64 flex-shrink-0 flex-col border-r border-border bg-slate-950/80">
@@ -45,32 +50,47 @@ export default function Sidebar() {
         <Link to="/calculators/milling" className="text-lg font-semibold text-white">
           Machining Helper
         </Link>
-        <p className="mt-1 text-sm text-slate-400">Panel technologiczny</p>
+        <p className="mt-1 text-sm text-slate-400">Pomocnik Technologa</p>
       </div>
       <nav className="flex-1 overflow-auto py-4">
         <div className="mb-6">
           <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Kalkulatory</p>
-          {primaryLinks.map((link) => (
+          {publicCalcLinks.map((link) => (
             <SidebarLink key={link.to} {...link} />
           ))}
-        </div>
-        <div>
-          <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Baza narzedzi</p>
-          {toolLinks.map((link) => (
+          {isAdmin ? adminCalcLinks.map((link) => (
             <SidebarLink key={link.to} {...link} />
-          ))}
-          {user?.role === "admin" ? <SidebarLink to="/admin" label="Panel admina" icon={Shield} /> : null}
+          )) : null}
         </div>
+        {isAdmin ? (
+          <div>
+            <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Baza narzedzi</p>
+            {toolLinks.map((link) => (
+              <SidebarLink key={link.to} {...link} />
+            ))}
+            <SidebarLink to="/admin" label="Panel admina" icon={Shield} />
+          </div>
+        ) : null}
       </nav>
       <div className="space-y-3 border-t border-border p-4">
-        <div>
-          <p className="text-sm font-medium text-white">{user?.username}</p>
-          <p className="text-xs uppercase tracking-[0.16em] text-slate-400">{user?.role}</p>
-        </div>
-        <Button variant="outline" className="w-full" onClick={logout}>
-          Wyloguj
-        </Button>
+        {user ? (
+          <>
+            <div>
+              <p className="text-sm font-medium text-white">{user.username}</p>
+              <p className="text-xs uppercase tracking-[0.16em] text-slate-400">{user.role}</p>
+            </div>
+            <Button variant="outline" className="w-full" onClick={logout}>
+              Wyloguj
+            </Button>
+          </>
+        ) : (
+          <Button variant="outline" className="w-full" onClick={() => navigate("/login")}>
+            <LogIn className="mr-2 h-4 w-4" />
+            Zaloguj
+          </Button>
+        )}
       </div>
+      <p className="border-t border-border px-4 py-2 text-center text-xs text-slate-500">by Grzegorz Karpiński 2026</p>
     </aside>
   );
 }

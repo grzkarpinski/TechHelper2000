@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.database import get_db_session
-from backend.dependencies import get_current_user
+from backend.dependencies import require_admin
 from backend.models import MillingHead, User
 from backend.schemas_tools import MillingHeadCreate, MillingHeadResponse
 
@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/tools/milling-heads", tags=["milling-heads"])
 @router.get("/", response_model=list[MillingHeadResponse])
 async def list_milling_heads(
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> list[MillingHeadResponse]:
     result = await session.execute(select(MillingHead))
     return [MillingHeadResponse.model_validate(row) for row in result.scalars().all()]
@@ -23,7 +23,7 @@ async def list_milling_heads(
 async def create_milling_head(
     payload: MillingHeadCreate,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> MillingHeadResponse:
     head = MillingHead(**payload.model_dump())
     session.add(head)
@@ -36,7 +36,7 @@ async def create_milling_head(
 async def get_milling_head(
     head_id: int,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> MillingHeadResponse:
     result = await session.execute(select(MillingHead).where(MillingHead.id == head_id))
     head = result.scalar_one_or_none()
@@ -50,7 +50,7 @@ async def update_milling_head(
     head_id: int,
     payload: MillingHeadCreate,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> MillingHeadResponse:
     result = await session.execute(select(MillingHead).where(MillingHead.id == head_id))
     head = result.scalar_one_or_none()
@@ -67,7 +67,7 @@ async def update_milling_head(
 async def delete_milling_head(
     head_id: int,
     session: AsyncSession = Depends(get_db_session),
-    _: User = Depends(get_current_user),
+    _: User = Depends(require_admin),
 ) -> None:
     result = await session.execute(select(MillingHead).where(MillingHead.id == head_id))
     head = result.scalar_one_or_none()

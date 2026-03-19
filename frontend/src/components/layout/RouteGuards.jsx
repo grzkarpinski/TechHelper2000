@@ -3,18 +3,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import AppShell from "./AppShell";
 import { useAuth } from "@/context/AuthContext";
 
-export function PrivateRoute() {
-  const { isAuthenticated, isLoading } = useAuth();
-  const location = useLocation();
-
-  if (isLoading) {
-    return <div className="flex min-h-screen items-center justify-center text-slate-400">Ladowanie...</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-
+export function PublicRoute() {
   return (
     <AppShell>
       <Outlet />
@@ -23,10 +12,15 @@ export function PrivateRoute() {
 }
 
 export function AdminRoute() {
-  const { user, isLoading } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
 
   if (isLoading) {
     return <div className="flex min-h-screen items-center justify-center text-slate-400">Ladowanie...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   if (user?.role !== "admin") {
