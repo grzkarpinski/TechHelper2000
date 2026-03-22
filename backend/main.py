@@ -8,6 +8,7 @@ from backend.config import get_allowed_origins, validate_environment
 from backend.database import AsyncSessionLocal, init_db
 from backend.models import User
 from backend.routers.auth import router as auth_router
+from backend.routers.admin import router as admin_router
 from backend.routers.calculators import router as calculators_router
 from backend.routers.drills import router as drills_router
 from backend.routers.milling_cutters import router as milling_cutters_router
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Machining Helper API")
 app.include_router(auth_router)
+app.include_router(admin_router)
 app.include_router(calculators_router)
 app.include_router(milling_heads_router)
 app.include_router(milling_cutters_router)

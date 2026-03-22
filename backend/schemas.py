@@ -82,3 +82,16 @@ class CostOperationResult(BaseModel):
 class CostCalculationResponse(BaseModel):
     operations: list[CostOperationResult]
     total: float
+
+
+class UserCreate(BaseModel):
+    username: str = Field(min_length=3, max_length=50)
+    password: str = Field(min_length=8, max_length=128)
+    role: Literal["admin", "user"] = "user"
+    is_active: bool = True
+
+
+class UserUpdate(BaseModel):
+    role: Literal["admin", "user"] | None = None
+    is_active: bool | None = None
+    password: str | None = Field(default=None, min_length=8, max_length=128)

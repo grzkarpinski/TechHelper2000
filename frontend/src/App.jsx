@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import UsersTable from "@/components/admin/UsersTable";
 import CostCalculator from "@/components/calculators/CostCalculator";
 import DrillingCalculator from "@/components/calculators/DrillingCalculator";
 import MillingCalculator from "@/components/calculators/MillingCalculator";
@@ -8,7 +9,6 @@ import DrillsTable from "@/components/tools/DrillsTable";
 import MillingCuttersTable from "@/components/tools/MillingCuttersTable";
 import MillingHeadsTable from "@/components/tools/MillingHeadsTable";
 import LoginPage from "@/pages/LoginPage";
-import PlaceholderPage from "@/pages/PlaceholderPage";
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/tools/milling-heads" element={<MillingHeadsTable />} />
           <Route path="/tools/milling-cutters" element={<MillingCuttersTable />} />
           <Route path="/tools/drills" element={<DrillsTable />} />
-          <Route path="/admin" element={<PlaceholderPage title="Panel admina" description="Zarzadzanie kontami pojawi sie w fazie 4." />} />
+          <Route path="/admin" element={<UsersTable />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/calculators/milling" replace />} />
