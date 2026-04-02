@@ -8,6 +8,7 @@ import { AdminRoute, PublicRoute } from "@/components/layout/RouteGuards";
 import DrillsTable from "@/components/tools/DrillsTable";
 import MillingCuttersTable from "@/components/tools/MillingCuttersTable";
 import MillingHeadsTable from "@/components/tools/MillingHeadsTable";
+import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<PublicRoute />}>
+        <Route path="/" element={<HomePage />} />
         <Route path="/calculators/milling" element={<MillingCalculator />} />
         <Route path="/calculators/drilling" element={<DrillingCalculator />} />
         <Route element={<AdminRoute />}>
@@ -25,7 +27,7 @@ export default function App() {
           <Route path="/admin" element={<UsersTable />} />
         </Route>
       </Route>
-      <Route path="*" element={<Navigate to="/calculators/milling" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

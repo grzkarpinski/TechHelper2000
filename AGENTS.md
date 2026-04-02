@@ -70,6 +70,7 @@ machining-helper/
 │   │   │   └── admin/
 │   │   │       └── UsersTable.jsx
 │   │   ├── pages/
+│   │   │   ├── HomePage.jsx
 │   │   │   ├── LoginPage.jsx
 │   │   ├── context/
 │   │   │   └── AuthContext.jsx          # globalny stan zalogowanego użytkownika
@@ -558,6 +559,7 @@ Dodatkowe filtry dla wierteł: `rodzaj_wiertla`.
 
 | Ścieżka                    | Komponent              | Dostęp     |
 |----------------------------|------------------------|------------|
+| `/`                        | `HomePage`             | publiczny  |
 | `/login`                   | `LoginPage`            | publiczny  |
 | `/calculators/milling`     | `MillingCalculator`    | zalogowany |
 | `/calculators/drilling`    | `DrillingCalculator`   | zalogowany |
@@ -712,6 +714,18 @@ W ramach każdej fazy agent zawsze zaczyna od backendu (modele → schematy → 
 ### Status implementacji
 
 - MVP ukończone
+
+### Zmiany po MVP
+
+- Aktualny stan na `2026-04-02`: dodano publiczną stronę startową aplikacji
+- Frontend:
+  - dodano `HomePage.jsx` jako landing page pod trasą `/`
+  - zmieniono domyślny fallback routingu z `/calculators/milling` na `/`
+  - logo w sidebarze prowadzi teraz do `/`
+  - przekierowania po `login()` i `logout()` prowadzą do `/`
+- UX:
+  - strona startowa nie zawiera przycisków akcji
+  - sidebar pozostaje jedyną nawigacją między modułami
 
 ---
 

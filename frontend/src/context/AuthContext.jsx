@@ -42,13 +42,13 @@ export function AuthProvider({ children }) {
     const currentUser = await meRequest();
     setUser(currentUser);
     toast.success("Zalogowano pomyslnie");
-    navigate("/calculators/milling", { replace: true });
+    navigate("/", { replace: true });
   }
 
   function logout() {
     localStorage.removeItem("auth_token");
     setUser(null);
-    navigate("/calculators/milling", { replace: true });
+    navigate("/", { replace: true });
   }
 
   return (
