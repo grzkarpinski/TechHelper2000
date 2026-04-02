@@ -71,9 +71,6 @@ machining-helper/
 │   │   │       └── UsersTable.jsx
 │   │   ├── pages/
 │   │   │   ├── LoginPage.jsx
-│   │   │   ├── CalculatorsPage.jsx
-│   │   │   ├── ToolsPage.jsx
-│   │   │   └── AdminPage.jsx
 │   │   ├── context/
 │   │   │   └── AuthContext.jsx          # globalny stan zalogowanego użytkownika
 │   │   └── App.jsx                      # routing, PrivateRoute, AdminRoute
@@ -568,7 +565,7 @@ Dodatkowe filtry dla wierteł: `rodzaj_wiertla`.
 | `/tools/milling-heads`     | `MillingHeadsTable`    | zalogowany |
 | `/tools/milling-cutters`   | `MillingCuttersTable`  | zalogowany |
 | `/tools/drills`            | `DrillsTable`          | zalogowany |
-| `/admin`                   | `AdminPage`            | admin      |
+| `/admin`                   | `UsersTable`           | admin      |
 
 ---
 
@@ -714,19 +711,7 @@ W ramach każdej fazy agent zawsze zaczyna od backendu (modele → schematy → 
 
 ### Status implementacji
 
-- Aktualny stan na `2026-03-19`: **Faza 3 zakonczona** + zmiana modelu dostepu
-- Zmiana modelu dostepu (2026-03-19):
-  - Kalkulatory frezowania i wiercenia: publiczne (bez logowania)
-  - Kalkulator kosztow, katalogi narzedzi, panel admina: tylko rola `admin`
-  - Backend: usunięto auth z endpointow milling/drilling, zmieniono get_current_user → require_admin w cost + 3 routerach narzedzi
-  - Frontend: PrivateRoute → PublicRoute (layout bez auth) + AdminRoute (sprawdza role), Sidebar warunkowe sekcje + przycisk Zaloguj/Wyloguj, logout() redirect na /calculators/milling
-- Zrealizowane w Fazie 3: pelny CRUD backend + frontend dla 3 typow narzedzi (glowice frezarskie, frezy, wiertla)
-  - Backend: 3 modele SQLAlchemy w `models.py` (`MillingHead`, `MillingCutter`, `Drill`), schematy w `schemas_tools.py`, 3 routery CRUD (`routers/milling_heads.py`, `routers/milling_cutters.py`, `routers/drills.py`), rejestracja w `main.py`
-  - Frontend: 3 pliki API (`millingHeads.js`, `millingCutters.js`, `drills.js`), konfiguracja pol i kolumn w `constants/toolFields.js`, hook `useToolsData.js` (sortowanie + filtrowanie klient-side), wspoldzielony formularz `ToolForm.jsx` (dialog add/edit), `DeleteConfirmDialog.jsx`, `ToolsTableHeader.jsx` (sortowanie), `ToolsFilterBar.jsx`, 3 tabele (`MillingHeadsTable.jsx`, `MillingCuttersTable.jsx`, `DrillsTable.jsx`)
-  - Dodano shadcn/ui: `table`, `dialog`, `select`, `badge`, `separator` + `components.json`. Button: dodano variant `destructive` + size `icon`. Tailwind: dodano CSS vars `popover`, `accent`, `destructive`
-  - Trasy w `App.jsx` zamienione z placeholderow na rzeczywiste komponenty
-- Zweryfikowane: `pytest backend/tests/ -v` (8/8 PASS), `vite build` (PASS), importy backend OK, tabele DB (`users`, `milling_heads`, `milling_cutters`, `drills`) utworzone, wszystkie pliki w limitach dlugosci
-- Kolejny krok na nastepna sesje: **Faza 4 — Panel admina**
+- MVP ukończone
 
 ---
 
@@ -772,7 +757,7 @@ Kolejność:
 8. `MillingCalculator.jsx` — komponent z logiką wykluczania pól
 9. `DrillingCalculator.jsx` — komponent z logiką wykluczania pól
 10. `CostCalculator.jsx` — dynamiczne wiersze operacji, wybór typu stawki
-11. Podpięcie komponentów do `CalculatorsPage.jsx`
+11. Podpięcie tras kalkulatorów w `App.jsx`
 
 **Warunek ukończenia:** wszystkie trzy kalkulatory liczą poprawnie, testy przechodzą, błędy walidacji są widoczne w UI.
 
@@ -794,7 +779,7 @@ Kolejność:
 9. `MillingCuttersTable.jsx` — tabela z sortowaniem, filtrowaniem, CRUD
 10. `DrillsTable.jsx` — tabela z sortowaniem, filtrowaniem, CRUD
 11. `ToolForm.jsx` — współdzielony formularz (tryb add/edit) dla wszystkich typów
-12. Podpięcie komponentów do `ToolsPage.jsx`
+12. Podpięcie tras narzędzi w `App.jsx`
 
 **Warunek ukończenia:** można dodawać, edytować, usuwać i filtrować narzędzia wszystkich trzech typów. Wszystkie pola formularza są widoczne niezależnie od wymagalności.
 
@@ -809,7 +794,7 @@ Kolejność:
 2. Rejestracja routera w `backend/main.py`
 3. `src/api/admin.js`
 4. `UsersTable.jsx` — lista użytkowników z akcjami (dodaj, zablokuj, zmień rolę, usuń)
-5. Podpięcie do `AdminPage.jsx`
+5. Podpięcie trasy `/admin` do `UsersTable.jsx`
 
 **Warunek ukończenia:** admin może tworzyć konta, blokować użytkowników i zmieniać role. Strona `/admin` niedostępna dla roli `user`.
 
