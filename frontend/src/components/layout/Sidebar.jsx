@@ -46,11 +46,16 @@ export default function Sidebar() {
 
   return (
     <aside className="flex h-screen w-64 flex-shrink-0 flex-col border-r border-border bg-slate-950/80">
-      <div className="border-b border-border px-6 py-5">
-        <Link to="/" className="text-lg font-semibold text-white">
-          Machining Helper
+      <div className="border-b border-border px-4 py-4">
+        <Link to="/" className="block">
+          <img
+            src="/logo.png"
+            alt="Machining Helper"
+            className="mx-auto h-auto w-4/5 object-contain"
+          />
+          <p className="mt-2 text-center text-lg font-semibold text-white">Machining Helper</p>
+          <p className="text-center text-sm text-slate-400">Pomocnik Technologa</p>
         </Link>
-        <p className="mt-1 text-sm text-slate-400">Pomocnik Technologa</p>
       </div>
       <nav className="flex-1 overflow-auto py-4">
         <div className="mb-6">

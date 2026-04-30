@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { calculateDrilling } from "@/api/calculators";
+import CalculatorInfoGraphic from "@/components/calculators/CalculatorInfoGraphic";
 import { drillingSchema, numberField } from "@/components/calculators/calculatorSchemas";
 import ResultRow from "@/components/calculators/ResultRow";
 import { Button } from "@/components/ui/button";
@@ -57,70 +58,78 @@ export default function DrillingCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-semibold">Kalkulator wiercenia</CardTitle>
-          <CardDescription>Podaj dane i oblicz parametry wiercenia.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="vc">Vc *</Label>
-                <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />
-                {errors.vc ? <p className="mt-1 text-sm text-red-400">{errors.vc.message}</p> : null}
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl font-semibold">Kalkulator wiercenia</CardTitle>
+            <CardDescription>Podaj dane i oblicz parametry wiercenia.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="vc">Vc *</Label>
+                  <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />
+                  {errors.vc ? <p className="mt-1 text-sm text-red-400">{errors.vc.message}</p> : null}
+                </div>
+                <div>
+                  <Label htmlFor="n">n *</Label>
+                  <Input id="n" type="number" step="any" disabled={vc != null} {...register("n", numberField)} />
+                </div>
+                <div>
+                  <Label htmlFor="fn">fn *</Label>
+                  <Input id="fn" type="number" step="any" disabled={f != null} {...register("fn", numberField)} />
+                  {errors.fn ? <p className="mt-1 text-sm text-red-400">{errors.fn.message}</p> : null}
+                </div>
+                <div>
+                  <Label htmlFor="f">F *</Label>
+                  <Input id="f" type="number" step="any" disabled={fn != null} {...register("f", numberField)} />
+                </div>
+                <div className="col-span-2">
+                  <Label htmlFor="d">D *</Label>
+                  <Input id="d" type="number" step="any" {...register("d", numberField)} />
+                  {errors.d ? <p className="mt-1 text-sm text-red-400">{errors.d.message}</p> : null}
+                </div>
               </div>
-              <div>
-                <Label htmlFor="n">n *</Label>
-                <Input id="n" type="number" step="any" disabled={vc != null} {...register("n", numberField)} />
+              <div className="flex justify-end gap-3 pt-2">
+                <Button type="button" variant="outline" onClick={handleClear}>
+                  CLEAR
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  OBLICZ
+                </Button>
               </div>
-              <div>
-                <Label htmlFor="fn">fn *</Label>
-                <Input id="fn" type="number" step="any" disabled={f != null} {...register("fn", numberField)} />
-                {errors.fn ? <p className="mt-1 text-sm text-red-400">{errors.fn.message}</p> : null}
-              </div>
-              <div>
-                <Label htmlFor="f">F *</Label>
-                <Input id="f" type="number" step="any" disabled={fn != null} {...register("f", numberField)} />
-              </div>
-              <div className="col-span-2">
-                <Label htmlFor="d">D *</Label>
-                <Input id="d" type="number" step="any" {...register("d", numberField)} />
-                {errors.d ? <p className="mt-1 text-sm text-red-400">{errors.d.message}</p> : null}
-              </div>
-            </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <Button type="button" variant="outline" onClick={handleClear}>
-                CLEAR
-              </Button>
-              <Button type="submit" disabled={isSubmitting}>
-                OBLICZ
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Wyniki</CardTitle>
-          <CardDescription>Wyniki odswiezaja sie po zatwierdzeniu formularza.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {result ? (
-            <div>
-              <ResultRow label="Vc" value={Math.round(result.vc)} unit="m/min" />
-              <ResultRow label="fn" value={Number(result.fn).toFixed(2)} unit="mm/obr" />
-              <div className="my-2" />
-              <ResultRow label="n" value={Math.round(result.n)} unit="obr/min" />
-              <ResultRow label="F" value={Math.round(result.f)} unit="mm/min" />
-            </div>
-          ) : (
-            <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
-          )}
-        </CardContent>
-      </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Wyniki</CardTitle>
+            <CardDescription>Wyniki odswiezaja sie po zatwierdzeniu formularza.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {result ? (
+              <div>
+                <ResultRow label="Vc" value={Math.round(result.vc)} unit="m/min" />
+                <ResultRow label="fn" value={Number(result.fn).toFixed(2)} unit="mm/obr" />
+                <div className="my-2" />
+                <ResultRow label="n" value={Math.round(result.n)} unit="obr/min" />
+                <ResultRow label="F" value={Math.round(result.f)} unit="mm/min" />
+              </div>
+            ) : (
+              <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      <CalculatorInfoGraphic
+        title="Schemat pomocniczy wiercenia"
+        src="/drilling-info.png"
+        alt="Schemat parametrow wiercenia: Vc, n, fn, F, D"
+      />
     </div>
   );
 }
