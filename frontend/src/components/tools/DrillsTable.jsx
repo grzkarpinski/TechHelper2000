@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { createDrill, deleteDrill, getDrills, updateDrill } from "@/api/drills";
@@ -21,6 +21,8 @@ export default function DrillsTable() {
   const [editItem, setEditItem] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteItem, setDeleteItem] = useState(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState(null);
 
   function handleAdd() {
     setEditItem(null);
@@ -35,6 +37,11 @@ export default function DrillsTable() {
   function handleDeleteClick(item) {
     setDeleteItem(item);
     setDeleteOpen(true);
+  }
+
+  function handleDetail(item) {
+    setDetailItem(item);
+    setDetailOpen(true);
   }
 
   async function handleFormSubmit(data) {
@@ -101,6 +108,9 @@ export default function DrillsTable() {
                     ))}
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleDetail(item)}>
+                          <Eye className="h-4 w-4 text-blue-400" />
+                        </Button>
                         <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -124,6 +134,15 @@ export default function DrillsTable() {
         initialData={editItem}
         onSubmit={handleFormSubmit}
         title="Wiertlo"
+      />
+      <ToolForm
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        fields={DRILL_FIELDS}
+        initialData={detailItem}
+        onSubmit={() => {}}
+        title="Wiertlo"
+        readOnly
       />
       <DeleteConfirmDialog
         open={deleteOpen}

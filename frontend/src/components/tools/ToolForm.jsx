@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { buildToolSchema } from "@/constants/toolFields";
 
-export default function ToolForm({ open, onOpenChange, fields, initialData, onSubmit, title }) {
+export default function ToolForm({ open, onOpenChange, fields, initialData, onSubmit, title, readOnly = false }) {
   const schema = buildToolSchema(fields);
   const isEdit = initialData != null;
 
@@ -70,6 +70,35 @@ export default function ToolForm({ open, onOpenChange, fields, initialData, onSu
       }
     }
     await onSubmit(cleaned);
+  }
+
+  if (readOnly && initialData) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Szczegoly: {title}</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 py-2">
+            {fields.map((field) => {
+              const val = initialData[field.key];
+              const display =
+                field.options?.find((o) => o.value === val)?.label ??
+                (val != null && val !== "" ? String(val) : "—");
+              return (
+                <div key={field.key}>
+                  <p className="text-xs font-medium text-slate-400">{field.label}</p>
+                  <p className="text-sm text-white">{display}</p>
+                </div>
+              );
+            })}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>Zamknij</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (

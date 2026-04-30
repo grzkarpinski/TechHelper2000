@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { createMillingHead, deleteMillingHead, getMillingHeads, updateMillingHead } from "@/api/millingHeads";
@@ -21,6 +21,8 @@ export default function MillingHeadsTable() {
   const [editItem, setEditItem] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteItem, setDeleteItem] = useState(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState(null);
 
   function handleAdd() {
     setEditItem(null);
@@ -35,6 +37,11 @@ export default function MillingHeadsTable() {
   function handleDeleteClick(item) {
     setDeleteItem(item);
     setDeleteOpen(true);
+  }
+
+  function handleDetail(item) {
+    setDetailItem(item);
+    setDetailOpen(true);
   }
 
   async function handleFormSubmit(data) {
@@ -101,6 +108,9 @@ export default function MillingHeadsTable() {
                     ))}
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleDetail(item)}>
+                          <Eye className="h-4 w-4 text-blue-400" />
+                        </Button>
                         <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -124,6 +134,15 @@ export default function MillingHeadsTable() {
         initialData={editItem}
         onSubmit={handleFormSubmit}
         title="Glowica frezarska"
+      />
+      <ToolForm
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        fields={MILLING_HEAD_FIELDS}
+        initialData={detailItem}
+        onSubmit={() => {}}
+        title="Glowica frezarska"
+        readOnly
       />
       <DeleteConfirmDialog
         open={deleteOpen}

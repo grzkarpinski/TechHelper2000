@@ -79,8 +79,6 @@ export const MILLING_HEAD_COLUMNS = [
   { key: "producent", label: "Producent" },
   { key: "liczba_ostrzy", label: "z" },
   { key: "material", label: "Material" },
-  { key: "predkosc_skrawania_min", label: "Vc min" },
-  { key: "predkosc_skrawania_max", label: "Vc max" },
   { key: "obroty", label: "n" },
   { key: "posuw", label: "F" },
 ];
@@ -91,8 +89,6 @@ export const MILLING_CUTTER_COLUMNS = [
   { key: "producent", label: "Producent" },
   { key: "liczba_ostrzy", label: "z" },
   { key: "material", label: "Material" },
-  { key: "predkosc_skrawania_min", label: "Vc min" },
-  { key: "predkosc_skrawania_max", label: "Vc max" },
   { key: "obroty", label: "n" },
   { key: "posuw", label: "F" },
 ];
@@ -103,8 +99,6 @@ export const DRILL_COLUMNS = [
   { key: "producent", label: "Producent" },
   { key: "rodzaj_wiertla", label: "Rodzaj" },
   { key: "liczba_ostrzy", label: "z" },
-  { key: "predkosc_skrawania_min", label: "Vc min" },
-  { key: "predkosc_skrawania_max", label: "Vc max" },
   { key: "obroty", label: "n" },
   { key: "posuw", label: "F" },
 ];
