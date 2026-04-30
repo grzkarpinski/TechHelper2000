@@ -1,4 +1,6 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const envApiBase = import.meta.env.VITE_API_URL;
+const defaultApiBase = import.meta.env.DEV ? "http://localhost:8000" : "";
+const API_BASE = (envApiBase && envApiBase.trim() ? envApiBase : defaultApiBase).replace(/\/$/, "");
 let unauthorizedHandler = null;
 
 export function registerUnauthorizedHandler(handler) {

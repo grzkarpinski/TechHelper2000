@@ -102,7 +102,8 @@ cp .env.example .env
 
 W `.env` ustaw minimum:
 - `SECRET_KEY` (min. 32 znaki),
-- `ALLOWED_ORIGINS` (dla domeny lub adresu IPv6),
+- `DATABASE_URL` jako absolutna sciezka pliku SQLite, np. `sqlite+aiosqlite:////home/<twoj_uzytkownik>/machining-helper/data/machining.db`,
+- `ALLOWED_ORIGINS` jako lista CSV originow, np. `https://twoja-domena.pl,https://www.twoja-domena.pl`,
 - `PORT` (port backendu, np. 8000),
 - `STATIC_DIR=frontend/dist`.
 
@@ -112,7 +113,11 @@ W `.env` ustaw minimum:
 cp frontend/.env.example frontend/.env
 ```
 
-W `frontend/.env` ustaw `VITE_API_URL` na publiczny adres API (np. URL przez Cloudflare).
+Przy Nginx reverse proxy (`/api -> 127.0.0.1:8000`) zostaw `VITE_API_URL` puste,
+aby frontend korzystal z same-origin i wywolywal `/api/*` na tej samej domenie.
+
+Jesli frontend i API sa na roznych domenach, ustaw `VITE_API_URL` na pelny URL API
+bez koncowego `/`, np. `https://api.twoja-domena.pl`.
 
 ```bash
 cd frontend

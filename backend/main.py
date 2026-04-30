@@ -24,11 +24,15 @@ from backend.routers.milling_heads import router as milling_heads_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def get_static_dir() -> Path:
     static_dir = get_env("STATIC_DIR", "frontend/dist")
-    return Path(static_dir).resolve()
+    static_path = Path(static_dir)
+    if static_path.is_absolute():
+        return static_path
+    return (PROJECT_ROOT / static_path).resolve()
 
 
 @asynccontextmanager
