@@ -3,7 +3,7 @@ import { Calculator, Drill, Gauge, LogIn, Shield, TableProperties } from "lucide
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.js";
 
 const publicCalcLinks = [
   { to: "/calculators/milling", label: "Frezowanie", icon: Calculator },
