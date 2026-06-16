@@ -77,6 +77,75 @@ Aplikacja: http://localhost:5173
 
 Jesli nie korzystasz ze skryptu `start-dev.ps1`, uruchom backend i frontend recznie (jak powyzej, w 2 terminalach).
 
+## Uruchomienie w Docker (backend + frontend)
+
+W repo sa gotowe pliki:
+- `Dockerfile.backend`
+- `Dockerfile.frontend`
+- `docker-compose.yml`
+
+### 1. Wymagania
+
+- Docker Engine + Docker Compose plugin
+
+### 2. Konfiguracja `.env`
+
+Upewnij sie, ze w glownym `.env` masz co najmniej:
+- `SECRET_KEY` (minimum 32 znaki),
+- `JWT_EXPIRE_HOURS=8`.
+
+W kontenerze backend nadpisuje:
+- `DATABASE_URL=sqlite+aiosqlite:////app/data/machining.db` (SQLite w volume),
+- `PORT=8000`.
+
+### 3. CORS dla Dockera
+
+Domyslnie `docker-compose.yml` ustawia:
+- `DOCKER_ALLOWED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080`
+
+Na produkcji (np. domena przez Cloudflare) ustaw przed startem:
+
+```bash
+export DOCKER_ALLOWED_ORIGINS="https://twoja-domena.pl,https://www.twoja-domena.pl"
+```
+
+PowerShell:
+
+```powershell
+$env:DOCKER_ALLOWED_ORIGINS = "https://twoja-domena.pl,https://www.twoja-domena.pl"
+```
+
+### 4. Build i start
+
+```bash
+docker compose up -d --build
+```
+
+Aplikacja bedzie dostepna pod:
+- `http://localhost:8080`
+
+### 5. Trwalosc bazy SQLite
+
+Baza nie znika po restarcie kontenerow, bo `docker-compose.yml` mapuje:
+- `./data:/app/data`
+
+Plik bazy w kontenerze:
+- `/app/data/machining.db`
+
+### 6. Limity RAM (VPS 1 GB)
+
+W compose ustawione sa limity:
+- backend: `200m`
+- frontend: `200m`
+
+### 7. Przydatne komendy
+
+```bash
+docker compose logs -f
+docker compose ps
+docker compose down
+```
+
 ## Pierwsze wdrozenie na VPS (mikr.us)
 
 Ponizsza procedura zaklada, ze backend serwuje frontend po buildzie (`frontend/dist`) i dziala jako jeden proces `uvicorn`.
