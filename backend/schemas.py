@@ -84,6 +84,24 @@ class CostCalculationResponse(BaseModel):
     total: float
 
 
+class TimeFromCostOperationRequest(BaseModel):
+    group_id: str = Field(min_length=1)
+    cost: float = Field(gt=0)
+
+
+class TimeFromCostOperationResult(BaseModel):
+    group_id: str
+    rate: float
+    cost: float
+    time_minutes: float
+
+
+class TimeFromCostCalculationResponse(BaseModel):
+    operations: list[TimeFromCostOperationResult]
+    total_cost: float
+    total_time_minutes: float
+
+
 class UserCreate(BaseModel):
     username: str = Field(min_length=3, max_length=50)
     password: str = Field(min_length=8, max_length=128)

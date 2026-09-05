@@ -1,100 +1,28 @@
-import { useMemo, useState } from "react";
-import { toast } from "sonner";
-
-import { calculateCost } from "@/api/calculators";
+import CostModeToggle from "@/components/calculators/CostModeToggle";
 import CostOperationRow from "@/components/calculators/CostOperationRow";
 import CostResultCard from "@/components/calculators/CostResultCard";
-import { createEmptyOperation, GROUP_OPTIONS, RATE_MAP, RATE_TYPE_OPTIONS } from "@/components/calculators/costConstants";
+import { GROUP_OPTIONS, RATE_TYPE_OPTIONS } from "@/components/calculators/costConstants";
+import TimeFromCostResultCard from "@/components/calculators/TimeFromCostResultCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import useCostCalculator from "@/hooks/useCostCalculator";
 
 export default function CostCalculator() {
-  const [rateType, setRateType] = useState("old");
-  const [operations, setOperations] = useState([createEmptyOperation()]);
-  const [response, setResponse] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const liveTotal = useMemo(() => {
-    return operations.reduce((sum, operation) => {
-      const rate = RATE_MAP[operation.group_id]?.[rateType];
-      const tpz = Number(operation.tpz);
-      const tj = Number(operation.tj);
-      if (!rate || !Number.isFinite(tpz) || !Number.isFinite(tj) || tpz <= 0 || tj <= 0) {
-        return sum;
-      }
-      return sum + (tpz / 60) * rate + (tj / 60) * rate;
-    }, 0);
-  }, [operations, rateType]);
-
-  function updateOperation(index, key, value) {
-    setOperations((prev) => {
-      const next = [...prev];
-      next[index] = { ...next[index], [key]: value };
-      return next;
-    });
-    setResponse(null);
-  }
-
-  function addOperation() {
-    if (operations.length >= 10) {
-      return;
-    }
-    setOperations((prev) => [...prev, createEmptyOperation()]);
-    setResponse(null);
-  }
-
-  function removeOperation(index) {
-    setOperations((prev) => {
-      if (prev.length === 1) {
-        return [createEmptyOperation()];
-      }
-      return prev.filter((_, currentIndex) => currentIndex !== index);
-    });
-    setResponse(null);
-  }
-
-  function handleClear() {
-    setRateType("old");
-    setOperations([createEmptyOperation()]);
-    setResponse(null);
-  }
-
-  async function handleCalculate() {
-    const payload = operations.map((operation) => ({
-      group_id: operation.group_id,
-      tpz: Number(operation.tpz),
-      tj: Number(operation.tj),
-    }));
-
-    const hasInvalid = payload.some(
-      (operation) => !operation.group_id || !Number.isFinite(operation.tpz) || !Number.isFinite(operation.tj) || operation.tpz <= 0 || operation.tj <= 0,
-    );
-
-    if (hasInvalid) {
-      toast.error("Uzupelnij poprawnie wszystkie pola operacji");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const result = await calculateCost(payload, rateType);
-      setResponse(result);
-    } catch (error) {
-      toast.error(error.message || "Blad polaczenia z serwerem");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+  const calculator = useCostCalculator();
+  const isTimeToCost = calculator.mode === "time-to-cost";
 
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold">Kalkulator kosztu obrobki</CardTitle>
-          <CardDescription>Dodaj operacje i wybierz typ stawki.</CardDescription>
+          <CardTitle className="text-2xl font-semibold">Kalkulator kosztu obróbki</CardTitle>
+          <CardDescription>
+            {isTimeToCost ? "Podaj czasy, aby obliczyć koszt." : "Podaj koszt, aby obliczyć łączny czas obróbki."}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <CostModeToggle mode={calculator.mode} onChange={calculator.changeMode} />
           <div>
             <Label>Typ stawki *</Label>
             <div className="mt-2 flex flex-wrap gap-3">
@@ -104,11 +32,8 @@ export default function CostCalculator() {
                     type="radio"
                     name="rateType"
                     value={option.value}
-                    checked={rateType === option.value}
-                    onChange={(event) => {
-                      setRateType(event.target.value);
-                      setResponse(null);
-                    }}
+                    checked={calculator.rateType === option.value}
+                    onChange={(event) => calculator.changeRateType(event.target.value)}
                   />
                   {option.label}
                 </label>
@@ -117,38 +42,38 @@ export default function CostCalculator() {
           </div>
 
           <div className="space-y-3">
-            {operations.map((operation, index) => (
+            {calculator.operations.map((operation, index) => (
               <CostOperationRow
-                key={`${index}-${operations.length}`}
+                key={`${index}-${calculator.operations.length}`}
                 operation={operation}
                 index={index}
                 groupOptions={GROUP_OPTIONS}
-                onChange={updateOperation}
-                onRemove={removeOperation}
+                mode={calculator.mode}
+                onChange={calculator.updateOperation}
+                onRemove={calculator.removeOperation}
               />
             ))}
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="text-sm text-slate-300">
-              Suma na zywo: <span className="font-semibold text-green-400">{liveTotal.toFixed(2)} PLN</span>
+              {isTimeToCost ? "Koszt na żywo: " : "Czas na żywo: "}
+              <span className="font-semibold text-green-400">
+                {calculator.liveValue.toFixed(isTimeToCost ? 2 : 1)} {isTimeToCost ? "PLN" : "min"}
+              </span>
             </div>
             <div className="flex gap-3">
-              <Button type="button" variant="outline" onClick={addOperation} disabled={operations.length >= 10}>
-                Dodaj operacje
-              </Button>
-              <Button type="button" variant="outline" onClick={handleClear}>
-                CLEAR
-              </Button>
-              <Button type="button" onClick={handleCalculate} disabled={isSubmitting}>
-                OBLICZ
-              </Button>
+              <Button type="button" variant="outline" onClick={calculator.addOperation} disabled={calculator.operations.length >= 10}>Dodaj operację</Button>
+              <Button type="button" variant="outline" onClick={calculator.clear}>CLEAR</Button>
+              <Button type="button" onClick={calculator.calculate} disabled={calculator.isSubmitting}>OBLICZ</Button>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <CostResultCard response={response} />
+      {isTimeToCost
+        ? <CostResultCard response={calculator.response} />
+        : <TimeFromCostResultCard response={calculator.response} />}
     </div>
   );
 }

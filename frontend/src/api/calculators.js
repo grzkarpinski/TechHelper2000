@@ -20,3 +20,10 @@ export function calculateCost(operations, rateType) {
     body: JSON.stringify(operations),
   });
 }
+
+export function calculateTimeFromCost(operations, rateType) {
+  return apiRequest(`/api/calculators/time-from-cost?rate_type=${encodeURIComponent(rateType)}`, {
+    method: "POST",
+    body: JSON.stringify(operations),
+  });
+}

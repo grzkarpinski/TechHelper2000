@@ -1,13 +1,13 @@
 export const GROUP_OPTIONS = [
   { value: "1", label: "1 - Frezarki konwencjonalne" },
   { value: "2", label: "2 - Frezarki konwencjonalne" },
-  { value: "17", label: "17 - Slusarze" },
   { value: "4", label: "4 - Tokarka CNC" },
   { value: "6", label: "6 - Frezarka 3-osie" },
   { value: "7", label: "7 - Soraluce" },
   { value: "8", label: "8 - You Ji" },
   { value: "10", label: "10 - Frezarko-wytaczarki" },
   { value: "16", label: "16 - Frezarka bramowa" },
+  { value: "17", label: "17 - Slusarze" },
   { value: "18", label: "18 - Frezarka bramowa duza ZAYER" },
   { value: "KJ", label: "KJ - Ramie pomiarowe, laser Tracker" },
 ];
@@ -33,5 +33,5 @@ export const RATE_MAP = {
 };
 
 export function createEmptyOperation() {
-  return { group_id: "", tpz: "", tj: "" };
+  return { group_id: "", tpz: "", tj: "", cost: "" };
 }

@@ -12,6 +12,9 @@ from backend.schemas import (
     DrillingCalculationResponse,
     MillingCalculationRequest,
     MillingCalculationResponse,
+    TimeFromCostCalculationResponse,
+    TimeFromCostOperationRequest,
+    TimeFromCostOperationResult,
 )
 
 router = APIRouter(prefix="/api/calculators", tags=["calculators"])
@@ -97,3 +100,43 @@ async def calculate_cost_endpoint(
         )
 
     return CostCalculationResponse(operations=operation_results, total=round(total, 4))
+
+
+@router.post("/time-from-cost", response_model=TimeFromCostCalculationResponse)
+async def calculate_time_from_cost_endpoint(
+    operations: list[TimeFromCostOperationRequest],
+    rate_type: str = Query(default="old", pattern="^(old|new_2026|external_2026)$"),
+    _: User = Depends(require_admin),
+) -> TimeFromCostCalculationResponse:
+    if not operations or len(operations) > 10:
+        detail = "Lista operacji nie moze byc pusta" if not operations else "Maksymalnie 10 operacji"
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=detail)
+
+    results: list[TimeFromCostOperationResult] = []
+    total_cost = 0.0
+    total_time = 0.0
+    for operation in operations:
+        rates = MACHINE_RATES.get(operation.group_id)
+        if rates is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Nieznana grupa maszyny: {operation.group_id}",
+            )
+        rate = float(rates[rate_type])
+        time_minutes = (operation.cost / rate) * 60
+        total_cost += operation.cost
+        total_time += time_minutes
+        results.append(
+            TimeFromCostOperationResult(
+                group_id=operation.group_id,
+                rate=round(rate, 2),
+                cost=round(operation.cost, 4),
+                time_minutes=round(time_minutes, 4),
+            )
+        )
+
+    return TimeFromCostCalculationResponse(
+        operations=results,
+        total_cost=round(total_cost, 4),
+        total_time_minutes=round(total_time, 4),
+    )
