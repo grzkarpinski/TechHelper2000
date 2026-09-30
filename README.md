@@ -95,7 +95,7 @@ Upewnij sie, ze w glownym `.env` masz co najmniej:
 - `JWT_EXPIRE_HOURS=8`.
 
 W kontenerze backend nadpisuje:
-- `DATABASE_URL=sqlite+aiosqlite:////app/data/machining.db` (SQLite w volume),
+- `DATABASE_URL=sqlite+aiosqlite:////app/backend/data/machining.db` (SQLite w volume),
 - `PORT=8000`.
 
 ### 3. CORS dla Dockera
@@ -129,8 +129,13 @@ Aplikacja bedzie dostepna pod:
 Baza nie znika po restarcie kontenerow, bo `docker-compose.yml` mapuje:
 - `./data:/app/data`
 
-Plik bazy w kontenerze:
-- `/app/data/machining.db`
+Plik bazy w kontenerze: `/app/backend/data/machining.db`.
+
+Aktualna konfiguracja Compose przechowuje bazę na hoście jako
+`backend/data/machining.db` i montuje ją w kontenerze jako
+`/app/backend/data/machining.db`. Tej ścieżki nie należy zmieniać na działającej
+produkcji. Procedury backupu, migracji i wdrożenia opisano w
+[`docs/production.md`](docs/production.md).
 
 ### 6. Limity RAM (VPS 1 GB)
 

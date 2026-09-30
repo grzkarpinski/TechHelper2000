@@ -77,4 +77,7 @@ async def get_db_session() -> AsyncSession:
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(init_db())
+    # Import kanonicznego modulu zapobiega utworzeniu drugiej klasy Base przy `python -m`.
+    from backend.database import init_db as canonical_init_db
+
+    asyncio.run(canonical_init_db())
