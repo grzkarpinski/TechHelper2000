@@ -16,7 +16,7 @@ export function AdminRoute() {
   const location = useLocation();
 
   if (isLoading) {
-    return <div className="flex min-h-screen items-center justify-center text-slate-400">Ladowanie...</div>;
+    return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Ladowanie...</div>;
   }
 
   if (!isAuthenticated) {

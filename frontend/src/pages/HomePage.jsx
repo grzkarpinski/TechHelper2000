@@ -10,12 +10,12 @@ export default function HomePage() {
             Aplikacja wspiera technologa obróbki skrawaniem w codziennej pracy.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3 text-sm leading-6 text-slate-300">
+        <CardContent className="space-y-3 text-sm leading-6 text-foreground">
           <p>
             Znajdziesz tutaj kalkulatory parametrów skrawania, bazę narzędzi oraz panel
             administracyjny dostępny dla uprawnionych użytkowników.
           </p>
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             Wybierz moduł z menu po lewej stronie, aby przejść dalej.
           </p>
         </CardContent>

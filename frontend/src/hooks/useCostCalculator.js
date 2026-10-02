@@ -6,7 +6,7 @@ import { createEmptyOperation, RATE_MAP } from "@/components/calculators/costCon
 
 export default function useCostCalculator() {
   const [mode, setMode] = useState("time-to-cost");
-  const [rateType, setRateType] = useState("old");
+  const [rateType, setRateType] = useState("new_2026");
   const [operations, setOperations] = useState([createEmptyOperation()]);
   const [response, setResponse] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -13,8 +13,8 @@ export default function ToolDetailsDialog({ open, onOpenChange, fields, item, ti
               ?? (value != null && value !== "" ? String(value) : "—");
             return (
               <div key={field.key}>
-                <p className="text-xs font-medium text-slate-400">{field.label}</p>
-                <p className="text-sm text-white">{display}</p>
+                <p className="text-xs font-medium text-muted-foreground">{field.label}</p>
+                <p className="text-sm text-foreground">{display}</p>
               </div>
             );
           })}

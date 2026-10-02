@@ -27,7 +27,7 @@ export default function CostCalculator() {
             <Label>Typ stawki *</Label>
             <div className="mt-2 flex flex-wrap gap-3">
               {RATE_TYPE_OPTIONS.map((option) => (
-                <label key={option.value} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-slate-300">
+                <label key={option.value} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground">
                   <input
                     type="radio"
                     name="rateType"
@@ -56,9 +56,9 @@ export default function CostCalculator() {
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="text-sm text-slate-300">
+            <div className="text-sm text-foreground">
               {isTimeToCost ? "Koszt na żywo: " : "Czas na żywo: "}
-              <span className="font-semibold text-green-400">
+              <span className="font-semibold text-success">
                 {calculator.liveValue.toFixed(isTimeToCost ? 2 : 1)} {isTimeToCost ? "PLN" : "min"}
               </span>
             </div>

@@ -13,9 +13,9 @@ export const GROUP_OPTIONS = [
 ];
 
 export const RATE_TYPE_OPTIONS = [
-  { value: "old", label: "Stare stawki" },
   { value: "new_2026", label: "Nowe stawki 2026" },
   { value: "external_2026", label: "Uslugi zewnetrzne 2026" },
+  { value: "old", label: "Stare stawki" },
 ];
 
 export const RATE_MAP = {

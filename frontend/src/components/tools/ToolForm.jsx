@@ -120,7 +120,7 @@ export default function ToolForm({ open, onOpenChange, fields, initialData, onSu
                   />
                 )}
                 {errors[field.key] ? (
-                  <p className="mt-1 text-sm text-red-400">{errors[field.key].message}</p>
+                  <p className="mt-1 text-sm text-destructive">{errors[field.key].message}</p>
                 ) : null}
               </div>
             ))}

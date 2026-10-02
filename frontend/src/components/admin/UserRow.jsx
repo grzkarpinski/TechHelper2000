@@ -14,7 +14,7 @@ function formatDate(dateStr) {
 
 export default function UserRow({ user, onEdit, onDelete }) {
   return (
-    <TableRow className="hover:bg-slate-800/50">
+    <TableRow className="hover:bg-muted/50">
       <TableCell className="whitespace-nowrap">{user.username}</TableCell>
       <TableCell className="whitespace-nowrap">
         <Badge variant={user.role === "admin" ? "default" : "secondary"}>
@@ -23,7 +23,7 @@ export default function UserRow({ user, onEdit, onDelete }) {
       </TableCell>
       <TableCell className="whitespace-nowrap">
         {user.is_active ? (
-          <Badge className="bg-green-600 hover:bg-green-600">Aktywny</Badge>
+          <Badge className="bg-success text-success-foreground hover:bg-success">Aktywny</Badge>
         ) : (
           <Badge variant="destructive">Zablokowany</Badge>
         )}
@@ -35,7 +35,7 @@ export default function UserRow({ user, onEdit, onDelete }) {
             <Pencil className="h-4 w-4" />
           </Button>
           <Button variant="ghost" size="icon" onClick={() => onDelete(user)}>
-            <Trash2 className="h-4 w-4 text-red-400" />
+            <Trash2 className="h-4 w-4 text-destructive" />
           </Button>
         </div>
       </TableCell>

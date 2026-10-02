@@ -5,21 +5,6 @@ realizacji może się zmieniać po analizie zakresu i zależności.
 
 ## Planowane
 
-### Tryb jasny interfejsu
-
-**Cel:** umożliwić przełączanie pomiędzy ciemnym i jasnym motywem.
-
-Zakres wstępny:
-
-- przełącznik motywu dostępny w głównym layoucie,
-- zapamiętywanie wyboru użytkownika,
-- wykorzystanie istniejących zmiennych kolorystycznych shadcn/ui,
-- sprawdzenie kontrastu formularzy, tabel, dialogów i komunikatów,
-- zachowanie obecnego trybu ciemnego jako jednej z opcji.
-
-**Wpływ na bazę danych:** brak.  
-**Szacowana złożoność:** mała/średnia.
-
 ### Layout dla ekranów smartfonów
 
 **Cel:** zapewnić czytelne korzystanie z kalkulatorów i pozostałych funkcji na
@@ -114,13 +99,13 @@ parametrów. Wszystkie zmiany będą wdrażane przez Alembic po wykonaniu backup
 
 ## Sugerowana kolejność
 
-1. Tryb jasny.
-2. Layout mobilny.
-3. Dynamiczny kalkulator frezowania.
-4. Analiza i projekt kalkulatorów czasów obróbki.
-5. Etapowa implementacja kalkulatorów czasów.
 
-Tryb jasny i layout mobilny można realizować bez zmian bazy. Dynamiczny
+1. Layout mobilny.
+2. Dynamiczny kalkulator frezowania.
+3. Analiza i projekt kalkulatorów czasów obróbki.
+4. Etapowa implementacja kalkulatorów czasów.
+
+Layout mobilny można realizować bez zmian bazy. Dynamiczny
 kalkulator pozwoli wypracować wzorzec interaktywnych obliczeń przed rozpoczęciem
 większego modułu czasów obróbki.
 
@@ -129,6 +114,10 @@ większego modułu czasów obróbki.
 Brak.
 
 ## Zrealizowane
+
+- tryb jasny i ciemny z zapamiętywaniem wyboru w przeglądarce,
+  wspólnym przełącznikiem w sidebarze i na stronie logowania oraz paletą
+  stalowo-błękitną dopasowaną do istniejących grafik (2026-10-02),
 
 - mechanizm bezpiecznych backupów produkcyjnej bazy SQLite,
 - kontrolowane migracje Alembic,

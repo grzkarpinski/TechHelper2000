@@ -71,7 +71,7 @@ export default function DrillingCalculator() {
                 <div>
                   <Label htmlFor="vc">Vc *</Label>
                   <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />
-                  {errors.vc ? <p className="mt-1 text-sm text-red-400">{errors.vc.message}</p> : null}
+                  {errors.vc ? <p className="mt-1 text-sm text-destructive">{errors.vc.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="n">n *</Label>
@@ -80,7 +80,7 @@ export default function DrillingCalculator() {
                 <div>
                   <Label htmlFor="fn">fn *</Label>
                   <Input id="fn" type="number" step="any" disabled={f != null} {...register("fn", numberField)} />
-                  {errors.fn ? <p className="mt-1 text-sm text-red-400">{errors.fn.message}</p> : null}
+                  {errors.fn ? <p className="mt-1 text-sm text-destructive">{errors.fn.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="f">F *</Label>
@@ -89,7 +89,7 @@ export default function DrillingCalculator() {
                 <div className="col-span-2">
                   <Label htmlFor="d">D *</Label>
                   <Input id="d" type="number" step="any" {...register("d", numberField)} />
-                  {errors.d ? <p className="mt-1 text-sm text-red-400">{errors.d.message}</p> : null}
+                  {errors.d ? <p className="mt-1 text-sm text-destructive">{errors.d.message}</p> : null}
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-2">
@@ -119,7 +119,7 @@ export default function DrillingCalculator() {
                 <ResultRow label="F" value={Math.round(result.f)} unit="mm/min" />
               </div>
             ) : (
-              <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
+              <p className="text-sm text-muted-foreground">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
             )}
           </CardContent>
         </Card>

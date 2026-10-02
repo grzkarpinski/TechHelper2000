@@ -25,38 +25,38 @@ export default function CostResultCard({ response }) {
           <div className="space-y-2">
             {response.operations.map((operation, index) => (
               <div key={`${operation.group_id}-${index}`} className="space-y-1 rounded-md border border-border p-3 text-sm">
-                <div className="text-slate-400">Grupa {operation.group_id}</div>
+                <div className="text-muted-foreground">Grupa {operation.group_id}</div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Tpz: {Number(operation.tpz).toFixed(1)} min</span>
-                  <span className="text-green-400">{operation.cost_tpz.toFixed(2)} PLN</span>
+                  <span className="text-muted-foreground">Tpz: {Number(operation.tpz).toFixed(1)} min</span>
+                  <span className="text-success">{operation.cost_tpz.toFixed(2)} PLN</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Tj: {Number(operation.tj).toFixed(1)} min</span>
-                  <span className="text-green-400">{operation.cost_tj.toFixed(2)} PLN</span>
+                  <span className="text-muted-foreground">Tj: {Number(operation.tj).toFixed(1)} min</span>
+                  <span className="text-success">{operation.cost_tj.toFixed(2)} PLN</span>
                 </div>
                 <div className="flex justify-between border-t border-border pt-1 font-medium">
                   <span>Razem</span>
-                  <span className="text-green-400">{operation.total.toFixed(2)} PLN</span>
+                  <span className="text-success">{operation.total.toFixed(2)} PLN</span>
                 </div>
               </div>
             ))}
             <div className="mt-3 space-y-1 border-t border-border pt-3 text-base font-semibold">
               <div className="flex justify-between">
                 <span>Suma Tpz: {totalTpz.toFixed(1)} min</span>
-                <span className="text-green-400">{totalCostTpz.toFixed(2)} PLN</span>
+                <span className="text-success">{totalCostTpz.toFixed(2)} PLN</span>
               </div>
               <div className="flex justify-between">
                 <span>Suma Tj: {totalTj.toFixed(1)} min</span>
-                <span className="text-green-400">{totalCostTj.toFixed(2)} PLN</span>
+                <span className="text-success">{totalCostTj.toFixed(2)} PLN</span>
               </div>
               <div className="flex justify-between border-t border-border pt-2">
                 <span>Suma razem</span>
-                <span className="text-green-400">{response.total.toFixed(2)} PLN</span>
+                <span className="text-success">{response.total.toFixed(2)} PLN</span>
               </div>
             </div>
           </div>
         ) : (
-          <p className="text-sm text-slate-400">Brak wyniku. Dodaj operacje i kliknij OBLICZ.</p>
+          <p className="text-sm text-muted-foreground">Brak wyniku. Dodaj operacje i kliknij OBLICZ.</p>
         )}
       </CardContent>
     </Card>

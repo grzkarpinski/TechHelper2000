@@ -73,13 +73,13 @@ export default function UsersTable() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={COLUMNS.length + 1} className="text-center text-slate-400">
+                  <TableCell colSpan={COLUMNS.length + 1} className="text-center text-muted-foreground">
                     Ladowanie...
                   </TableCell>
                 </TableRow>
               ) : filteredData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={COLUMNS.length + 1} className="text-center text-slate-400">
+                  <TableCell colSpan={COLUMNS.length + 1} className="text-center text-muted-foreground">
                     Brak danych
                   </TableCell>
                 </TableRow>

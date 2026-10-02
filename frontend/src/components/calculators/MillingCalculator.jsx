@@ -71,7 +71,7 @@ export default function MillingCalculator() {
                 <div>
                   <Label htmlFor="vc">Vc *</Label>
                   <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />
-                  {errors.vc ? <p className="mt-1 text-sm text-red-400">{errors.vc.message}</p> : null}
+                  {errors.vc ? <p className="mt-1 text-sm text-destructive">{errors.vc.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="n">n *</Label>
@@ -80,7 +80,7 @@ export default function MillingCalculator() {
                 <div>
                   <Label htmlFor="fz">Fz *</Label>
                   <Input id="fz" type="number" step="any" disabled={f != null} {...register("fz", numberField)} />
-                  {errors.fz ? <p className="mt-1 text-sm text-red-400">{errors.fz.message}</p> : null}
+                  {errors.fz ? <p className="mt-1 text-sm text-destructive">{errors.fz.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="f">F *</Label>
@@ -89,12 +89,12 @@ export default function MillingCalculator() {
                 <div>
                   <Label htmlFor="d">D *</Label>
                   <Input id="d" type="number" step="any" {...register("d", numberField)} />
-                  {errors.d ? <p className="mt-1 text-sm text-red-400">{errors.d.message}</p> : null}
+                  {errors.d ? <p className="mt-1 text-sm text-destructive">{errors.d.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="z">z *</Label>
                   <Input id="z" type="number" step="1" {...register("z", numberField)} />
-                  {errors.z ? <p className="mt-1 text-sm text-red-400">{errors.z.message}</p> : null}
+                  {errors.z ? <p className="mt-1 text-sm text-destructive">{errors.z.message}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="ap">Ap</Label>
@@ -133,7 +133,7 @@ export default function MillingCalculator() {
                 {result.q != null ? <ResultRow label="Q" value={Number(result.q).toFixed(2)} unit="cm³/min" /> : null}
               </div>
             ) : (
-              <p className="text-sm text-slate-400">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
+              <p className="text-sm text-muted-foreground">Brak wyniku. Wypelnij formularz i kliknij OBLICZ.</p>
             )}
           </CardContent>
         </Card>

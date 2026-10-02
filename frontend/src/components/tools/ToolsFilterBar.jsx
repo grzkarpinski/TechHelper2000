@@ -22,7 +22,7 @@ export default function ToolsFilterBar({ fields, filters, setFilters }) {
       {filterableFields.map((field) =>
         field.type === "select" ? (
           <div key={field.key} className="w-40">
-            <label className="mb-1 block text-xs font-medium text-slate-400">{field.label}</label>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">{field.label}</label>
             <Select value={filters[field.key] || ""} onValueChange={(val) => handleChange(field.key, val === "all" ? "" : val)}>
               <SelectTrigger>
                 <SelectValue placeholder="Wszystkie" />
@@ -39,7 +39,7 @@ export default function ToolsFilterBar({ fields, filters, setFilters }) {
           </div>
         ) : (
           <div key={field.key} className="w-40">
-            <label className="mb-1 block text-xs font-medium text-slate-400">{field.label}</label>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">{field.label}</label>
             <Input
               placeholder={`Filtruj ${field.label.toLowerCase()}...`}
               value={filters[field.key] || ""}

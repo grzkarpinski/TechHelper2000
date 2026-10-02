@@ -88,14 +88,14 @@ export default function UserForm({ open, onOpenChange, initialData, onSubmit }) 
           <div>
             <Label htmlFor="username">Nazwa uzytkownika *</Label>
             <Input id="username" {...register("username")} disabled={isEdit} />
-            {errors.username ? <p className="mt-1 text-sm text-red-400">{errors.username.message}</p> : null}
+            {errors.username ? <p className="mt-1 text-sm text-destructive">{errors.username.message}</p> : null}
           </div>
           <div>
             <Label htmlFor="password">
               Haslo {isEdit ? "(pozostaw puste aby nie zmieniac)" : "*"}
             </Label>
             <Input id="password" type="password" {...register("password")} />
-            {errors.password ? <p className="mt-1 text-sm text-red-400">{errors.password.message}</p> : null}
+            {errors.password ? <p className="mt-1 text-sm text-destructive">{errors.password.message}</p> : null}
           </div>
           <div>
             <Label>Rola *</Label>

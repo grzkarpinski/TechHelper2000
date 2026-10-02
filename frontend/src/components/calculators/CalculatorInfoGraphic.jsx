@@ -13,7 +13,7 @@ export default function CalculatorInfoGraphic({ title, src, alt }) {
           <DialogTrigger asChild>
             <button
               type="button"
-              className="mx-auto block w-[42.5%] overflow-hidden rounded-md border border-border transition hover:border-blue-500/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="mx-auto block w-[42.5%] overflow-hidden rounded-md border border-border bg-graphic p-1 transition hover:border-primary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               aria-label={`${title} - otworz powiekszenie`}
             >
               <img
@@ -35,7 +35,7 @@ export default function CalculatorInfoGraphic({ title, src, alt }) {
               alt={alt}
               loading="lazy"
               decoding="async"
-              className="h-auto w-full rounded-md border border-border object-contain"
+              className="h-auto w-full rounded-md border border-border bg-graphic p-1 object-contain"
             />
           </DialogContent>
         </Dialog>

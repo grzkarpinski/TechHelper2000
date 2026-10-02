@@ -6,6 +6,47 @@
 
 @layer base {
   :root {
+    --background: 212.308 39.394% 93.529%;
+    --foreground: 213.913 50.000% 18.039%;
+    --card: 210.000 40.000% 98.039%;
+    --card-foreground: 213.913 50.000% 18.039%;
+    --primary: 221.212 83.193% 53.333%;
+    --primary-foreground: 0.000 0.000% 100.000%;
+    --primary-hover: 224.278 76.327% 48.039%;
+    --border: 212.727 26.829% 83.922%;
+    --input: 212.727 26.829% 83.922%;
+    --field-background: 0.000 0.000% 100.000%;
+    --muted: 211.579 37.255% 90.000%;
+    --muted-foreground: 213.000 19.608% 40.000%;
+    --ring: 221.212 83.193% 53.333%;
+    --popover: 210.000 40.000% 98.039%;
+    --popover-foreground: 213.913 50.000% 18.039%;
+    --accent: 214.286 94.595% 92.745%;
+    --accent-foreground: 224.278 76.327% 48.039%;
+    --destructive: 0.000 73.709% 41.765%;
+    --destructive-foreground: 0.000 0.000% 100.000%;
+    --success: 142.430 71.812% 29.216%;
+    --success-foreground: 0.000 0.000% 100.000%;
+    --warning: 22.727 82.500% 31.373%;
+    --sidebar: 211.579 37.255% 90.000%;
+    --graphic: 216.774 58.491% 10.392%;
+    --secondary: 211.579 37.255% 90.000%;
+    --secondary-foreground: 213.913 50.000% 18.039%;
+    --radius: 0.75rem;
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --primary-hover: 217 91% 65%;
+    --field-background: 222 47% 7%;
+    --sidebar: 222 47% 6%;
+    --graphic: 217 59% 10%;
+    --success: 142 69% 58%;
+    --success-foreground: 222 47% 7%;
+    --warning: 48 96% 53%;
+    --secondary: 217 33% 18%;
+    --secondary-foreground: 210 40% 98%;
     --background: 222 47% 7%;
     --foreground: 210 40% 98%;
     --card: 222 39% 11%;
@@ -28,10 +69,6 @@
 
   * {
     @apply border-border;
-  }
-
-  html {
-    color-scheme: dark;
   }
 
   body {
