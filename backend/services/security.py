@@ -28,10 +28,12 @@ def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
 
-def create_access_token(subject: str) -> str:
+def create_access_token(subject: str, *, development: bool = False) -> str:
     expires_delta = timedelta(hours=get_jwt_expire_hours())
     expire = datetime.now(timezone.utc) + expires_delta
     payload = {"sub": subject, "exp": expire}
+    if development:
+        payload["development_admin"] = True
     return jwt.encode(payload, get_secret_key(), algorithm=ALGORITHM)
 
 

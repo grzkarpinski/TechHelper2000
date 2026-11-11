@@ -8,6 +8,8 @@ services:
     env_file:
       - .env
     environment:
+      APP_ENV: production
+      DEV_ADMIN_ENABLED: "false"
       PORT: "8000"
       DATABASE_URL: sqlite+aiosqlite:////app/backend/data/machining.db
       ALLOWED_ORIGINS: ${DOCKER_ALLOWED_ORIGINS:-http://localhost:8080,http://127.0.0.1:8080}

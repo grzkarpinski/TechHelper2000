@@ -15,6 +15,7 @@ from backend.config import get_allowed_origins, get_env, validate_environment
 from backend.database import AsyncSessionLocal, init_db
 from backend.limiter import limiter
 from backend.models import User
+from backend.services.development_auth import development_admin_enabled
 from backend.routers.auth import router as auth_router
 from backend.routers.admin import router as admin_router
 from backend.routers.calculators import router as calculators_router
@@ -38,6 +39,8 @@ def get_static_dir() -> Path:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     validate_environment()
+    if development_admin_enabled():
+        logger.warning("Włączono lokalny dostęp administratora DEV bez hasła.")
     await init_db()
 
     app.state.static_dir = get_static_dir()

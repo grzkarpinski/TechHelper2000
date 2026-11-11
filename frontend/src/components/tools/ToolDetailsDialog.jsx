@@ -6,7 +6,7 @@ export default function ToolDetailsDialog({ open, onOpenChange, fields, item, ti
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader><DialogTitle>Szczegóły: {title}</DialogTitle></DialogHeader>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-3 py-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 py-2">
           {fields.map((field) => {
             const value = item[field.key];
             const display = field.options?.find((option) => option.value === value)?.label
@@ -14,7 +14,7 @@ export default function ToolDetailsDialog({ open, onOpenChange, fields, item, ti
             return (
               <div key={field.key}>
                 <p className="text-xs font-medium text-muted-foreground">{field.label}</p>
-                <p className="text-sm text-foreground">{display}</p>
+                <p className="break-words text-sm text-foreground">{display}</p>
               </div>
             );
           })}

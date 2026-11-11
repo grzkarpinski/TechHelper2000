@@ -67,7 +67,7 @@ export default function DrillingCalculator() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="vc">Vc *</Label>
                   <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />
@@ -86,7 +86,7 @@ export default function DrillingCalculator() {
                   <Label htmlFor="f">F *</Label>
                   <Input id="f" type="number" step="any" disabled={fn != null} {...register("f", numberField)} />
                 </div>
-                <div className="col-span-2">
+                <div className="sm:col-span-2">
                   <Label htmlFor="d">D *</Label>
                   <Input id="d" type="number" step="any" {...register("d", numberField)} />
                   {errors.d ? <p className="mt-1 text-sm text-destructive">{errors.d.message}</p> : null}

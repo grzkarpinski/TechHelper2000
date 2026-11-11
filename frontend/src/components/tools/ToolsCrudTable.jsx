@@ -21,7 +21,7 @@ export default function ToolsCrudTable({ config }) {
   });
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
         <CardTitle className="text-2xl font-semibold">{config.heading}</CardTitle>
         <Button onClick={actions.add}><Plus className="mr-2 h-4 w-4" /> {config.addLabel}</Button>
       </CardHeader>

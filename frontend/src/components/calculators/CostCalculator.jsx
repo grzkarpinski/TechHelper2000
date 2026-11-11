@@ -27,7 +27,7 @@ export default function CostCalculator() {
             <Label>Typ stawki *</Label>
             <div className="mt-2 flex flex-wrap gap-3">
               {RATE_TYPE_OPTIONS.map((option) => (
-                <label key={option.value} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground">
+                <label key={option.value} className="flex min-h-11 items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-foreground">
                   <input
                     type="radio"
                     name="rateType"

@@ -21,7 +21,7 @@ export default function ToolsFilterBar({ fields, filters, setFilters }) {
     <div className="flex flex-wrap items-end gap-3">
       {filterableFields.map((field) =>
         field.type === "select" ? (
-          <div key={field.key} className="w-40">
+          <div key={field.key} className="w-full sm:w-40">
             <label className="mb-1 block text-xs font-medium text-muted-foreground">{field.label}</label>
             <Select value={filters[field.key] || ""} onValueChange={(val) => handleChange(field.key, val === "all" ? "" : val)}>
               <SelectTrigger>
@@ -38,7 +38,7 @@ export default function ToolsFilterBar({ fields, filters, setFilters }) {
             </Select>
           </div>
         ) : (
-          <div key={field.key} className="w-40">
+          <div key={field.key} className="w-full sm:w-40">
             <label className="mb-1 block text-xs font-medium text-muted-foreground">{field.label}</label>
             <Input
               placeholder={`Filtruj ${field.label.toLowerCase()}...`}

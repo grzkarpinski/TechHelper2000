@@ -154,6 +154,9 @@ Agent musi aktywnie dbać o to, żeby żaden plik nie rozrósł się ponad miar�
 
 ## Wytyczne UI / UX
 
+Każda istniejąca i przyszła funkcja musi działać na komputerach i smartfonach.
+Obowiązują [zasady responsywności](docs/responsive-ui.md), także przy rozbudowie modułów.
+
 ### Biblioteka komponentów
 
 Używaj **shadcn/ui** jako głównej biblioteki komponentów. Instalacja przez CLI (`npx shadcn@latest add ...`). Komponenty shadcn/ui mają pierwszeństwo przed pisaniem własnych od zera.
@@ -182,8 +185,8 @@ Komponenty shadcn/ui do zainstalowania na starcie:
 
 ### Layout
 
-- **Sidebar nawigacja** po lewej stronie — stała szerokość `w-64`, widoczna na każdej podstronie.
-- **Obszar roboczy** po prawej: `flex-1 p-6 overflow-auto`.
+- **Komputer (od 1024 px)** — sidebar `w-64` po lewej. **Smartfon i tablet** — górny pasek i zwijane menu w `<Dialog>`.
+- **Obszar roboczy**: `min-h-0 min-w-0 flex-1 overflow-auto p-3 sm:p-6`.
 - Sidebar zawiera sekcje: *Kalkulatory* (frezowanie, wiercenie, koszt obróbki) i *Baza narzędzi* (głowice, frezy, wiertła). Link do panelu admina widoczny tylko dla roli `admin`.
 - Strona `/login` — pełny ekran bez sidebara, formularz wyśrodkowany.
 
@@ -191,7 +194,7 @@ Komponenty shadcn/ui do zainstalowania na starcie:
 
 Elementy interfejsu nigdy nie mogą na siebie nachodzić. Agent musi przestrzegać:
 
-- **Sidebar i treść** — obszar roboczy zawsze zaczyna się za sidebarem. Layout główny: `flex h-screen overflow-hidden`. Sidebar: `w-64 flex-shrink-0`. Obszar roboczy: `flex-1 overflow-auto` — nigdy `overflow-visible` na kontenerze strony.
+- **Sidebar i treść** — layout `flex h-dvh flex-col overflow-hidden lg:flex-row`. Stały sidebar tylko od `lg`; na mniejszych ekranach menu w portalu. Treść `min-h-0 min-w-0 flex-1 overflow-auto`.
 - **Modale i dialogi** — zawsze renderowane przez `<Dialog>` z shadcn/ui (Portal do `<body>`). Nigdy pozycjonowane przez `absolute` wewnątrz kontenera z `overflow:hidden`.
 - **Dropdowny i tooltips** — używaj komponentów shadcn/ui (`<Select>`, `<Tooltip>`), które automatycznie obsługują Portal i z-index.
 - **Powiadomienia / toasty** — używaj `sonner` lub `<Toast>` z shadcn/ui, renderowane w dedykowanym `<Toaster>` na poziomie `App.jsx`.
@@ -464,7 +467,7 @@ Suma      = Σ (Koszt_Tpz + Koszt_Tj) dla wszystkich operacji
 - Wyszukiwanie live — filtrowanie listy przy wpisywaniu (po stronie frontendu, bez dodatkowego żądania API jeśli dane już załadowane).
 - Tabela z sortowaniem kolumn (rosnąco/malejąco) po kliknięciu nagłówka.
 - Formularz dodawania/edycji w modalu lub osobnym widoku — ta sama decyzja dla wszystkich trzech typów narzędzi.
-- Aplikacja jest **desktop only** — brak wymagań responsywności mobilnej.
+- Aplikacja obsługuje **komputery i smartfony**. Każda przyszła funkcjonalność musi spełniać [zasady responsywności](docs/responsive-ui.md).
 
 #### Zasada wymagalności pól w formularzach
 
@@ -831,7 +834,6 @@ Kolejność:
 
 - ❌ Edycja stawek godzinowych przez UI — stawki są zakodowane w backendzie
 - ❌ Light mode / przełącznik motywu
-- ❌ Responsywność mobilna — aplikacja desktop only
 - ❌ Eksport danych (PDF, Excel, CSV)
 - ❌ Historia obliczeń / zapisywanie wyników kalkulatorów
 - ❌ Importowanie narzędzi z pliku

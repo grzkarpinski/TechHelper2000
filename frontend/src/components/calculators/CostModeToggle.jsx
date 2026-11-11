@@ -10,7 +10,7 @@ export default function CostModeToggle({ mode, onChange }) {
   return (
     <div>
       <Label>Tryb obliczeń</Label>
-      <div className="mt-2 flex gap-2">
+      <div className="mt-2 flex flex-wrap gap-2">
         {MODES.map((option) => (
           <Button
             key={option.value}

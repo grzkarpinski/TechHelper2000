@@ -80,7 +80,7 @@ export default function LoginPage() {
                 type="button"
                 variant="outline"
                 size="icon"
-                className="h-10 w-10 shrink-0"
+                className="h-11 w-11 shrink-0 sm:h-10 sm:w-10"
                 aria-label={isPasswordVisible ? "Ukryj hasło" : "Pokaż hasło"}
                 aria-pressed={isPasswordVisible}
                 aria-controls="password"

@@ -21,6 +21,9 @@ def validate_environment() -> None:
     if len(get_env("SECRET_KEY")) < 32:
         raise RuntimeError("Zmienne SECRET_KEY musi miec co najmniej 32 znaki")
 
+    if get_env("DEV_ADMIN_ENABLED", "false").lower() == "true" and get_env("APP_ENV", "production") != "development":
+        raise RuntimeError("DEV_ADMIN_ENABLED wymaga APP_ENV=development")
+
 
 def get_allowed_origins() -> list[str]:
     return [origin.strip() for origin in get_env("ALLOWED_ORIGINS").split(",") if origin.strip()]

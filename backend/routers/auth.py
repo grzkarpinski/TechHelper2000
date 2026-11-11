@@ -8,8 +8,14 @@ from backend.models import User
 from backend.schemas import LoginRequest, TokenResponse, UserResponse
 from backend.services.security import create_access_token, verify_password
 from backend.dependencies import get_current_user
+from backend.services.development_auth import create_development_session
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
+
+
+@router.post("/development-session", response_model=TokenResponse, include_in_schema=False)
+async def development_session(request: Request) -> TokenResponse:
+    return TokenResponse(access_token=create_development_session(request))
 
 
 @router.post("/login", response_model=TokenResponse)

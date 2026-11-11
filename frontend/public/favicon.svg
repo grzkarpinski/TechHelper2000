@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Machining Helper</title>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+  <path d="M10 21a25 25 0 0 1 36-10" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+  <path d="M10 48V23h7l8 12 8-12h7v25h-8V36l-7 10-7-10v12Z" fill="#e2e8f0"/>
+  <path d="M46 19h10v12H46Z" fill="#94a3b8"/>
+  <path d="M46 33h10v17l-5 7-5-7Z" fill="#60a5fa"/>
+  <path d="m47 39 8-5m-8 13 8-5m-5 12 5-4" fill="none" stroke="#0f172a" stroke-width="3"/>
+</svg>

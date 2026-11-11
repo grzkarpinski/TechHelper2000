@@ -2,7 +2,7 @@
 
 Aplikacja webowa dla technologa obrobki skrawaniem z backendem FastAPI i frontendem React.
 
-## Szybki start (Windows)
+## Szybki start (Windows) — [automatyczny dostęp administratora DEV](docs/development.md)
 
 Uruchom z katalogu glownego projektu jednym poleceniem:
 

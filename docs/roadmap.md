@@ -5,23 +5,6 @@ realizacji może się zmieniać po analizie zakresu i zależności.
 
 ## Planowane
 
-### Layout dla ekranów smartfonów
-
-**Cel:** zapewnić czytelne korzystanie z kalkulatorów i pozostałych funkcji na
-telefonach.
-
-Zakres wstępny:
-
-- zwijana nawigacja mobilna zamiast stałego sidebara,
-- jednokolumnowy układ kalkulatorów na małych ekranach,
-- formularze i dialogi mieszczące się w szerokości ekranu,
-- wygodne rozmiary przycisków i pól dotykowych,
-- kontrolowane przewijanie szerokich tabel,
-- testy dla najważniejszych szerokości ekranu.
-
-**Wpływ na bazę danych:** brak.  
-**Szacowana złożoność:** średnia.
-
 ### Dynamiczny kalkulator frezowania
 
 **Cel:** umożliwić interaktywne dobieranie parametrów obróbki w granicach
@@ -100,13 +83,13 @@ parametrów. Wszystkie zmiany będą wdrażane przez Alembic po wykonaniu backup
 ## Sugerowana kolejność
 
 
-1. Layout mobilny.
-2. Dynamiczny kalkulator frezowania.
-3. Analiza i projekt kalkulatorów czasów obróbki.
-4. Etapowa implementacja kalkulatorów czasów.
+1. Dynamiczny kalkulator frezowania.
+2. Analiza i projekt kalkulatorów czasów obróbki.
+3. Etapowa implementacja kalkulatorów czasów.
 
-Layout mobilny można realizować bez zmian bazy. Dynamiczny
-kalkulator pozwoli wypracować wzorzec interaktywnych obliczeń przed rozpoczęciem
+Każda nowa funkcja musi obsługiwać komputery i smartfony zgodnie z
+[zasadami responsywności](responsive-ui.md). Dynamiczny kalkulator pozwoli
+wypracować wzorzec interaktywnych obliczeń przed rozpoczęciem
 większego modułu czasów obróbki.
 
 ## W realizacji
@@ -114,6 +97,9 @@ większego modułu czasów obróbki.
 Brak.
 
 ## Zrealizowane
+
+- layout dla komputerów i smartfonów: zwijana nawigacja, formularze
+  jednokolumnowe, przewijane dialogi i tabele oraz pola dotykowe (2026-11-11),
 
 - tryb jasny i ciemny z zapamiętywaniem wyboru w przeglądarce,
   wspólnym przełącznikiem w sidebarze i na stronie logowania oraz paletą

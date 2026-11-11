@@ -67,7 +67,7 @@ export default function MillingCalculator() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="vc">Vc *</Label>
                   <Input id="vc" type="number" step="any" disabled={n != null} {...register("vc", numberField)} />

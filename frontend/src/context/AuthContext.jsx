@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { loginRequest, meRequest } from "@/api/auth";
+import { developmentSessionRequest, loginRequest, meRequest } from "@/api/auth";
 import { registerUnauthorizedHandler } from "@/api/client";
 
 const AuthContext = createContext(null);
@@ -21,6 +21,22 @@ export function AuthProvider({ children }) {
   }, [navigate]);
 
   useEffect(() => {
+    if (import.meta.env.DEV && import.meta.env.VITE_DEV_ADMIN === "true") {
+      async function initializeDevelopmentSession() {
+        try {
+          const tokenData = await developmentSessionRequest();
+          localStorage.setItem("auth_token", tokenData.access_token);
+          setUser(await meRequest());
+        } catch {
+          localStorage.removeItem("auth_token");
+          toast.error("Nie udało się uruchomić dostępu administratora DEV");
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      initializeDevelopmentSession();
+      return;
+    }
     const token = localStorage.getItem("auth_token");
     if (!token) {
       setIsLoading(false);

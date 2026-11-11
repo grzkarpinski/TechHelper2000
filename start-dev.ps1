@@ -1,4 +1,10 @@
+param([switch]$NoDevAdmin)
+
 $ErrorActionPreference = "Stop"
+$env:APP_ENV = "development"
+$env:DEV_ADMIN_ENABLED = if ($NoDevAdmin) { "false" } else { "true" }
+$env:VITE_DEV_ADMIN = $env:DEV_ADMIN_ENABLED
+$env:ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
 
 $root = $PSScriptRoot
 if (-not $root) {
@@ -56,11 +62,11 @@ if ($installFrontend) {
     Set-Content -Path $frontendMarker -Value $frontendHash
 }
 
-$backendCmd = "Set-Location '$root'; & '$activateScript'; python -m uvicorn backend.main:app --reload --port 8000"
-$frontendCmd = "Set-Location '$frontendDir'; npm.cmd run dev"
+$backendCmd = "Set-Location '$root'; & '$activateScript'; python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000"
+$frontendCmd = "Set-Location '$frontendDir'; npm.cmd run dev -- --host 127.0.0.1 --strictPort"
 
-Start-Process powershell -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $backendCmd
-Start-Process powershell -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $frontendCmd
+Start-Process powershell -WindowStyle Hidden -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $backendCmd
+Start-Process powershell -WindowStyle Hidden -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $frontendCmd
 
 $isHealthy = $false
 for ($i = 0; $i -lt 15; $i++) {

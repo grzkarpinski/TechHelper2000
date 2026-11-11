@@ -21,41 +21,41 @@ const toolLinks = [
   { to: "/tools/drills", label: "Wiertla", icon: TableProperties },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isAdmin = user?.role === "admin";
 
   return (
-    <aside className="flex h-screen w-64 flex-shrink-0 flex-col border-r border-border bg-sidebar">
+    <aside className="flex h-full min-h-0 w-full max-w-full lg:w-64 flex-shrink-0 flex-col overflow-y-auto border-r border-border bg-sidebar">
       <div className="border-b border-border px-4 py-4">
-        <Link to="/" className="block">
+        <Link to="/" onClick={onNavigate} className="block">
           <img
             src="/logo.png"
             alt="Machining Helper"
-            className="mx-auto h-auto w-4/5 rounded-lg border border-border bg-graphic object-contain"
+            className="mx-auto h-16 w-auto lg:h-auto lg:w-4/5 rounded-lg border border-border bg-graphic object-contain"
           />
           <p className="mt-2 text-center text-lg font-semibold text-foreground">Machining Helper</p>
           <p className="text-center text-sm text-muted-foreground">Pomocnik Technologa</p>
         </Link>
       </div>
-      <nav className="flex-1 overflow-auto py-4">
+      <nav className="flex-none py-4 lg:flex-1 lg:overflow-auto">
         <div className="mb-6">
           <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Kalkulatory</p>
           {publicCalcLinks.map((link) => (
-            <SidebarLink key={link.to} {...link} />
+            <SidebarLink key={link.to} onClick={onNavigate} {...link} />
           ))}
           {isAdmin ? adminCalcLinks.map((link) => (
-            <SidebarLink key={link.to} {...link} />
+            <SidebarLink key={link.to} onClick={onNavigate} {...link} />
           )) : null}
         </div>
         {isAdmin ? (
           <div>
             <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Baza narzedzi</p>
             {toolLinks.map((link) => (
-              <SidebarLink key={link.to} {...link} />
+              <SidebarLink key={link.to} onClick={onNavigate} {...link} />
             ))}
-            <SidebarLink to="/admin" label="Panel admina" icon={Shield} />
+            <SidebarLink to="/admin" label="Panel admina" icon={Shield} onClick={onNavigate} />
           </div>
         ) : null}
       </nav>
@@ -64,15 +64,15 @@ export default function Sidebar() {
         {user ? (
           <>
             <div>
-              <p className="text-sm font-medium text-foreground">{user.username}</p>
+              <p className="break-all text-sm font-medium text-foreground">{user.username}</p>
               <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{user.role}</p>
             </div>
-            <Button variant="outline" className="w-full" onClick={logout}>
+            <Button variant="outline" className="w-full" onClick={() => { onNavigate?.(); logout(); }}>
               Wyloguj
             </Button>
           </>
         ) : (
-          <Button variant="outline" className="w-full" onClick={() => navigate("/login")}>
+          <Button variant="outline" className="w-full" onClick={() => { onNavigate?.(); navigate("/login"); }}>
             <LogIn className="mr-2 h-4 w-4" />
             Zaloguj
           </Button>

@@ -1,5 +1,9 @@
 import { apiRequest } from "./client";
 
+export function developmentSessionRequest() {
+  return apiRequest("/api/auth/development-session", { method: "POST" });
+}
+
 export function loginRequest(credentials) {
   return apiRequest("/api/auth/login", {
     method: "POST",
